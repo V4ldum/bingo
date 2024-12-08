@@ -1,0 +1,20 @@
+targets:
+  $default:
+    sources:
+      exclude:
+        - 'lib/env.dart'
+        - 'lib/**/_generated/*'
+    builders:
+      freezed:
+        options:
+          build_extensions:
+            '^lib/{{path}}/{{file}}.dart': 'lib/{{path}}/_generated/{{file}}.freezed.dart'
+      source_gen|combining_builder:
+        options:
+          build_extensions:
+            '^lib/{{path}}/{{file}}.dart': 'lib/{{path}}/_generated/{{file}}.g.dart'
+
+  # No custom config here to avoid running the custom configuration on env.dart
+  envied:
+    sources:
+      - 'lib/env.dart'
