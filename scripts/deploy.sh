@@ -9,7 +9,7 @@ BUILD_VERSION=$(git rev-parse HEAD)
 echo "$(date --utc +%FT%TZ): Releasing new bingo version : $BUILD_VERSION"
 
 echo "$(date --utc +%FT%TZ): Running build..."
-docker build -t bingo .
+docker build --build-arg env="$(cat ../bingo-env)" -t bingo .
 
 echo "$(date --utc +%FT%TZ): Running container..."
 cd /root
