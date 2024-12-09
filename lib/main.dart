@@ -4,12 +4,12 @@ import 'package:bingo/env.dart';
 import 'package:bingo/router.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
-  usePathUrlStrategy();
+  // Enable rewriting to # with reverse proxy
+  //usePathUrlStrategy();
   await Supabase.initialize(url: Env.url, anonKey: Env.key);
 
   runApp(
