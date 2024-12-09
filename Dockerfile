@@ -1,6 +1,5 @@
 # Build
 FROM debian:bookworm-slim AS builder
-ARG env
 
 RUN apt-get update -qq && \
     apt-get install -y -qq git curl unzip
@@ -19,7 +18,6 @@ RUN flutter config --enable-web
 
 WORKDIR /work
 COPY . .
-RUN echo "$env" > .env
 
 RUN dart run build_runner build
 RUN flutter build web --release
