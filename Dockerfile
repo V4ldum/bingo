@@ -24,4 +24,6 @@ RUN flutter build web --release
 
 # Run
 FROM nginx:alpine AS runner
+# Update nginx config
+RUN sed -i '/location \/ {/,/}/s|^\(.*index  index.html index.htm;\)|\1\n        try_files \$uri \$uri/ \$uri.html /index.html;|' /path/to/nginx.conf
 COPY --from=builder /work/build/web /usr/share/nginx/html
