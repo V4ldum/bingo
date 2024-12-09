@@ -19,7 +19,6 @@ RUN flutter config --enable-web
 
 WORKDIR /work
 COPY . .
-COPY .env .
 
 RUN dart run build_runner build
 RUN flutter build web --release
