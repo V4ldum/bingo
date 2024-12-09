@@ -1,11 +1,11 @@
 {
-    "name": "bingo",
-    "short_name": "bingo",
+    "name": "Bingo Builder",
+    "short_name": "Bingo Builder",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#272627",
     "theme_color": "#272627",
-    "description": "A new Flutter project.",
+    "description": "full toxicité ici",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
