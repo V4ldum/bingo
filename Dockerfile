@@ -19,7 +19,7 @@ RUN flutter config --enable-web
 WORKDIR /work
 COPY . .
 
-RUN dart run build_runner build | grep -Ev "^[INFO]"
+RUN dart run build_runner build | grep -Ev "^\[INFO\]"
 RUN flutter build web --release > /dev/null
 
 # Run
