@@ -35,7 +35,10 @@ class AuthenticationPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(authenticationViewModelProvider.select((value) => value.isLoading));
+    final usernameController = TextEditingController()
+      ..text = ref.read(authenticationViewModelProvider).value?.$1 ?? '';
+    final passwordController = TextEditingController()
+      ..text = ref.read(authenticationViewModelProvider).value?.$2 ?? '';
 
     return Scaffold(
       appBar: const CustomAppBar(),
@@ -54,23 +57,20 @@ class AuthenticationPage extends ConsumerWidget {
               ),
               const SizedBox(height: 30),
               ShadInput(
+                controller: usernameController,
                 placeholder: const Text("Nom d'utilisateur"),
                 autocorrect: false,
                 textInputAction: TextInputAction.next,
-                autofillHints: const [
-                  AutofillHints.username,
-                  AutofillHints.email,
-                ],
                 onChanged: ref.read(authenticationViewModelProvider.notifier).onUsernameChanged,
               ),
               const SizedBox(height: 10),
               ShadInput(
+                controller: passwordController,
                 placeholder: const Text('Mot de passe'),
                 autocorrect: false,
                 obscureText: ref.watch(obscuredPasswordProvider),
                 textInputAction: TextInputAction.done,
                 onChanged: ref.read(authenticationViewModelProvider.notifier).onPasswordChanged,
-                autofillHints: const [AutofillHints.password],
                 suffix: ShadButton.ghost(
                   width: 24,
                   height: 24,
@@ -89,7 +89,7 @@ class AuthenticationPage extends ConsumerWidget {
               ),
               const SizedBox(height: 30),
               ShadButton(
-                enabled: !ref.read(authenticationViewModelProvider).isLoading,
+                enabled: !ref.watch(authenticationViewModelProvider).isLoading,
                 onPressed: () => _onAuthenticateButtonPressed(context, ref),
                 icon: ref.read(authenticationViewModelProvider).isLoading
                     ? const SizedBox.square(
