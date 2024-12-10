@@ -36,6 +36,7 @@ class BingoTable extends StatelessWidget {
               final currentIndex = (rowIndex * bingo.size) + columnIndex;
 
               return SizedBox.square(
+                key: UniqueKey(), // Disable Flutter's build optimization from breaking shuffling and resizing
                 dimension: tableSize / bingo.size,
                 child: GestureDetector(
                   onTap: () => onCellTapped?.call(currentIndex),
