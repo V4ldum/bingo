@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta_package/meta_package.dart';
-import 'package:rust/vec.dart';
+import 'package:rust/rust.dart';
 
 part '_generated/bingo_dto.freezed.dart';
 part '_generated/bingo_dto.g.dart';

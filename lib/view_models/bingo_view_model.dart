@@ -2,7 +2,7 @@ import 'package:bingo/models/bingo.dart';
 import 'package:bingo/repositories/database_repository.dart';
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:rust/option.dart';
+import 'package:rust/rust.dart';
 
 part '_generated/bingo_view_model.g.dart';
 
@@ -15,10 +15,10 @@ class BingoViewModel extends _$BingoViewModel {
   }
 
   void checkBingoItem(String id) {
-    final value = Option.from(state.valueOrNull);
+    final value = Option.of(state.valueOrNull);
 
     if (value case Some(:final v)) {
-      final item = Option.from(v.items.where((item) => item.id == id).firstOrNull);
+      final item = v.items.iter().where((item) => item.id == id).next();
 
       if (item case Some(:final v)) {
         ref.read(databaseRepositoryProvider).checkBingoItem(id, isChecked: !v.isChecked);
@@ -40,7 +40,7 @@ class BingoViewModel extends _$BingoViewModel {
   }
 
   void _realtimeUpdateRebuild(BingoItem newItem) {
-    final value = Option.from(state.valueOrNull);
+    final value = Option.of(state.valueOrNull);
 
     if (value case Some(:final v)) {
       final oldItemIndex = v.items.indexWhere((item) => item.id == newItem.id);

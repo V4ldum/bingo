@@ -28,7 +28,6 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  anyhow: ^1.3.2
   envied: ^1.0.0
   flutter:
     sdk: flutter
@@ -46,7 +45,7 @@ dependencies:
       url: https://github.com/V4ldum/meta-package
       ref: main
   riverpod_annotation: ^2.6.1
-  rust: ^1.3.7
+  rust: ^2.0.2
   shadcn_ui: ^0.16.0
   supabase_flutter: ^2.8.1
 

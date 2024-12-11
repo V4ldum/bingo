@@ -7,7 +7,7 @@ import 'package:bingo/widgets/no_bingo_here_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rust/option.dart';
+import 'package:rust/rust.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 class BingoEditPage extends ConsumerWidget {
@@ -19,7 +19,7 @@ class BingoEditPage extends ConsumerWidget {
   final String? id;
 
   Future<void> _onCreateButtonPressed(BuildContext context, WidgetRef ref) async {
-    final state = Option.from(ref.read(editBingoViewModelProvider(id: id)).value);
+    final state = Option.of(ref.read(editBingoViewModelProvider(id: id)).value);
 
     if (state case Some(:final v)) {
       if (v.title.isEmpty) {

@@ -1,7 +1,7 @@
 import 'package:bingo/models/bingo.dart';
 import 'package:bingo/repositories/database_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:rust/ops.dart';
+import 'package:rust/rust.dart';
 
 part '_generated/edit_bingo_view_model.g.dart';
 

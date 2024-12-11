@@ -1,7 +1,6 @@
 import 'package:bingo/repositories/dtos/bingo_dto.dart';
 import 'package:flutter/foundation.dart';
-import 'package:rust/ops.dart';
-import 'package:rust/vec.dart';
+import 'package:rust/rust.dart';
 
 Vec<BingoItem> _processBingoItems({required int size, required Vec<BingoItem> vec}) {
   vec.sort((a, b) => a.index.compareTo(b.index));

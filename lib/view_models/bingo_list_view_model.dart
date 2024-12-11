@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bingo/models/bingo.dart';
 import 'package:bingo/repositories/database_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:rust/vec.dart';
+import 'package:rust/rust.dart';
 
 part '_generated/bingo_list_view_model.g.dart';
 

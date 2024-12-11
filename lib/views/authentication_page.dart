@@ -35,6 +35,7 @@ class AuthenticationPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Hack to get password managers to work with Flutter Web
     final usernameController = TextEditingController()
       ..text = ref.read(authenticationViewModelProvider).value?.$1 ?? '';
     final passwordController = TextEditingController()
