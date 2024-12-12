@@ -12,15 +12,15 @@ ENV PATH="/flutter/bin:/flutter/bin/cache/dart-sdk/bin:${PATH}"
 RUN flutter --disable-analytics
 RUN dart --disable-analytics
 
-RUN flutter channel stable > /dev/null
-RUN flutter upgrade > /dev/null
-RUN flutter config --enable-web
+RUN flutter channel stable | grep -Ev "root|superuser" > /dev/null
+RUN flutter upgrade | grep -Ev "root|superuser" > /dev/null
+RUN flutter config --enable-web | grep -Ev "root|superuser"
 
 WORKDIR /work
 COPY . .
 
 RUN dart run build_runner build | grep -Ev "^\[INFO\]"
-RUN flutter build web --release > /dev/null
+RUN flutter build web --release | grep -Ev "root|superuser" > /dev/null
 
 # Run
 FROM nginx:alpine AS runner
