@@ -12,8 +12,8 @@ ENV PATH="/flutter/bin:/flutter/bin/cache/dart-sdk/bin:${PATH}"
 RUN flutter --disable-analytics
 RUN dart --disable-analytics
 
-RUN flutter channel stable
-RUN flutter upgrade
+RUN flutter channel stable > /dev/null
+RUN flutter upgrade > /dev/null
 RUN flutter config --enable-web
 
 WORKDIR /work
