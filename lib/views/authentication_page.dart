@@ -4,12 +4,22 @@ import 'package:bingo/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rust/rust.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 final obscuredPasswordProvider = StateProvider<bool>((ref) => true);
 
-class AuthenticationPage extends ConsumerWidget {
+class AuthenticationPage extends ConsumerStatefulWidget {
   const AuthenticationPage({super.key});
+
+  @override
+  ConsumerState<AuthenticationPage> createState() => _AuthenticationPageState();
+}
+
+class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  FocusNode passwordFocusNode = FocusNode();
 
   Future<void> _onAuthenticateButtonPressed(BuildContext context, WidgetRef ref) async {
     final authenticated = await ref.read(authenticationViewModelProvider.notifier).authenticate();
@@ -34,12 +44,21 @@ class AuthenticationPage extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     // Hack to get password managers to work with Flutter Web
-    final usernameController = TextEditingController()
-      ..text = ref.read(authenticationViewModelProvider).value?.$1 ?? '';
-    final passwordController = TextEditingController()
-      ..text = ref.read(authenticationViewModelProvider).value?.$2 ?? '';
+    final value = Option.of(ref.read(authenticationViewModelProvider).valueOrNull);
+    if (value case Some(:final v)) {
+      if (usernameController.text != v.$1) {
+        debugPrint('Username field is desync-ed, probably means something autofilled, fixing');
+        usernameController.text = ref.read(authenticationViewModelProvider).value?.$1 ?? '';
+      }
+      if (passwordController.text != v.$2) {
+        debugPrint('Password field is desync-ed, probably means something autofilled, fixing');
+        passwordController.text = ref.read(authenticationViewModelProvider).value?.$2 ?? '';
+        passwordFocusNode.requestFocus();
+        passwordController.selection = TextSelection.fromPosition(TextPosition(offset: passwordController.text.length));
+      }
+    }
 
     return Scaffold(
       appBar: const CustomAppBar(),
@@ -66,12 +85,14 @@ class AuthenticationPage extends ConsumerWidget {
               ),
               const SizedBox(height: 10),
               ShadInput(
+                focusNode: passwordFocusNode,
                 controller: passwordController,
                 placeholder: const Text('Mot de passe'),
                 autocorrect: false,
                 obscureText: ref.watch(obscuredPasswordProvider),
                 textInputAction: TextInputAction.done,
                 onChanged: ref.read(authenticationViewModelProvider.notifier).onPasswordChanged,
+                obscuringCharacter: '●',
                 suffix: ShadButton.ghost(
                   width: 24,
                   height: 24,
