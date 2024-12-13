@@ -4,6 +4,7 @@ import 'package:bingo/repositories/database_repository.dart';
 import 'package:bingo/utils/native_inputs.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:rust/rust.dart';
 
 part '_generated/authentication_view_model.g.dart';
 
@@ -32,24 +33,27 @@ class AuthenticationViewModel extends _$AuthenticationViewModel {
   }
 
   Future<bool?> authenticate() async {
-    if (!state.hasValue) {
-      return null;
+    final value = Option.of(state.valueOrNull);
+
+    if (value case Some(:final v)) {
+      if (v.$1.isEmpty || v.$2.isEmpty) {
+        return false;
+      }
+
+      late final bool ret;
+      final oldState = state.requireValue;
+
+      state = const AsyncLoading();
+
+      state = await AsyncValue.guard(() async {
+        ret = await ref.read(databaseRepositoryProvider).authenticateUser(state.requireValue.$1, state.requireValue.$2);
+        return oldState;
+      });
+
+      return ret;
     }
-    if (state.requireValue.$1.isEmpty || state.requireValue.$2.isEmpty) {
-      return false;
-    }
-
-    late final bool ret;
-    final oldState = state.requireValue;
-
-    state = const AsyncLoading();
-
-    state = await AsyncValue.guard(() async {
-      ret = await ref.read(databaseRepositoryProvider).authenticateUser(state.requireValue.$1, state.requireValue.$2);
-      return oldState;
-    });
-
-    return ret;
+    // None
+    return null;
   }
 
   bool isAuthenticated() {
