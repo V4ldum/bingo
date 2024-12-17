@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 class NativeInputs {
   NativeInputs._();
 
-  static const kUsernameFieldId = '#native-username-field';
-  static const kPasswordFieldId = '#native-password-field';
+  static const kUsernameFieldId = 'native-username-field';
+  static const kPasswordFieldId = 'native-password-field';
 
   static void attach({void Function(String)? usernameCallback, void Function(String)? passwordCallback}) {
     _attachUsernameField(usernameCallback);
@@ -86,7 +86,7 @@ class NativeInputs {
   }
 
   static void dispose() {
-    html.document.querySelector(kUsernameFieldId)?.remove();
-    html.document.querySelector(kPasswordFieldId)?.remove();
+    html.document.querySelector('#$kUsernameFieldId')?.remove();
+    html.document.querySelector('#$kPasswordFieldId')?.remove();
   }
 }
