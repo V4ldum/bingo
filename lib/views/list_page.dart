@@ -1,6 +1,7 @@
 import 'package:bingo/router.dart';
 import 'package:bingo/view_models/bingo_list_view_model.dart';
 import 'package:bingo/widgets/custom_app_bar.dart';
+import 'package:bingo/widgets/enhanced_shad_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -160,7 +161,8 @@ class ListPage extends ConsumerWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            ShadButton.ghost(
+                            EnhancedShadButton.ghost(
+                              middleClickPath: '${AppRoute.bingo}/${bingo.id}',
                               onPressed: () => context.goNamed(AppRoute.bingo, pathParameters: {'id': bingo.id}),
                               icon: const Icon(
                                 LucideIcons.eye,

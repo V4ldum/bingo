@@ -1,4 +1,5 @@
 import 'package:bingo/router.dart';
+import 'package:bingo/widgets/enhanced_shad_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -17,8 +18,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: ShadButton.link(
+      title: EnhancedShadButton.link(
         padding: EdgeInsets.zero,
+        middleClickPath: '/',
         onPressed: () => context.goNamed(AppRoute.admin),
         child: Row(
           children: [

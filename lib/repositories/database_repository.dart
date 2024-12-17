@@ -115,7 +115,10 @@ class DatabaseRepository {
           table: _kBingoItemTableName,
           callback: (payload) => callback(BingoItemDto.fromJson(payload.newRecord)),
           filter: PostgresChangeFilter(
-              type: PostgresChangeFilterType.eq, column: _kBingoItemBingoIdColumnName, value: bingoId),
+            type: PostgresChangeFilterType.eq,
+            column: _kBingoItemBingoIdColumnName,
+            value: bingoId,
+          ),
         )
         .subscribe();
   }
