@@ -142,7 +142,12 @@ class ListPage extends ConsumerWidget {
                     (bingo) => [
                       ShadTableCell(
                         alignment: Alignment.center,
-                        child: Text(DateFormat('dd/MM/yyyy').format(bingo.created)),
+                        child: Text(
+                          DateFormat('dd/MM/yyyy').format(bingo.created),
+                          style: const TextStyle(
+                            fontFeatures: [FontFeature.tabularFigures()],
+                          ),
+                        ),
                       ),
                       ShadTableCell(
                         child: Text(

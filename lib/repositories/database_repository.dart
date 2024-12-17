@@ -68,6 +68,7 @@ class DatabaseRepository {
     await _client.from(_kBingoTableName).update({
       _kBingoTitleColumnName: bingo.title,
       _kBingoSizeColumnName: bingo.size,
+      _kBingoCreatedColumnName: DateFormat('MM-dd-yyyy').format(bingo.created), // american spergs
     }).eq(_kBingoIdColumnName, bingo.id);
 
     for (final item in bingo.items) {

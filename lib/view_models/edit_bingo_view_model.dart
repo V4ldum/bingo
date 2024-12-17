@@ -44,15 +44,21 @@ class EditBingoViewModel extends _$EditBingoViewModel {
     state = AsyncData(state.requireValue.copyWith(items: items));
   }
 
-  void size(int value) {
-    if (state.requireValue.size != value) {
-      state = AsyncData(state.requireValue.copyWith(size: value));
-    }
-  }
-
   void title(String value) {
     if (state.requireValue.title != value) {
       state = AsyncData(state.requireValue.copyWith(title: value));
+    }
+  }
+
+  void date(DateTime? value) {
+    if (value != null && state.requireValue.created != value) {
+      state = AsyncData(state.requireValue.copyWith(created: value));
+    }
+  }
+
+  void size(int value) {
+    if (state.requireValue.size != value) {
+      state = AsyncData(state.requireValue.copyWith(size: value));
     }
   }
 

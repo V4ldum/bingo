@@ -77,6 +77,14 @@ class BingoEditPage extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
+                  ShadDatePicker(
+                    selected: bingo.created,
+                    onChanged: ref.read(editBingoViewModelProvider(id: id).notifier).date,
+                    closeOnSelection: true,
+                    allowDeselection: false,
+                    formatDate: (date) => DateFormat.yMMMMd('fr-FR').format(date),
+                  ),
+                  const SizedBox(height: 10),
                   ShadSelect<int>(
                     initialValue: bingo.size,
                     selectedOptionBuilder: (_, value) => Text('${value}x$value'),
