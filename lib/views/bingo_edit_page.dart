@@ -93,6 +93,7 @@ class BingoEditPage extends ConsumerWidget {
                       ShadOption(value: 5, child: Text('5x5')),
                       ShadOption(value: 4, child: Text('4x4')),
                       ShadOption(value: 3, child: Text('3x3')),
+                      ShadOption(value: 1, child: Text('1x1')),
                     ],
                   ),
                   const SizedBox(height: 40),
