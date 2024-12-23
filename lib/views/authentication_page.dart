@@ -43,6 +43,71 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
     }
   }
 
+  Widget _authenticationForm() {
+    return AutofillGroup(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Text(
+              'Connexion',
+              style: ShadTheme.of(context).textTheme.h3,
+            ),
+          ),
+          const SizedBox(height: 30),
+          ShadInput(
+            controller: usernameController,
+            placeholder: const Text("Nom d'utilisateur"),
+            autocorrect: false,
+            textInputAction: TextInputAction.next,
+            autofillHints: const [AutofillHints.username],
+            onChanged: ref.read(authenticationViewModelProvider.notifier).onUsernameChanged,
+          ),
+          const SizedBox(height: 10),
+          ShadInput(
+            focusNode: passwordFocusNode,
+            controller: passwordController,
+            placeholder: const Text('Mot de passe'),
+            autocorrect: false,
+            obscureText: ref.watch(obscuredPasswordProvider),
+            textInputAction: TextInputAction.done,
+            autofillHints: const [AutofillHints.password],
+            onChanged: ref.read(authenticationViewModelProvider.notifier).onPasswordChanged,
+            obscuringCharacter: '●',
+            suffix: ShadButton.ghost(
+              width: 24,
+              height: 24,
+              padding: EdgeInsets.zero,
+              decoration: const ShadDecoration(
+                secondaryBorder: ShadBorder.none,
+                secondaryFocusedBorder: ShadBorder.none,
+              ),
+              onPressed: () => ref.read(obscuredPasswordProvider.notifier).state =
+                  !ref.read(obscuredPasswordProvider.notifier).state,
+              icon: Icon(
+                size: 16,
+                ref.read(obscuredPasswordProvider) ? LucideIcons.eye : LucideIcons.eyeOff,
+              ),
+            ),
+          ),
+          const SizedBox(height: 30),
+          ShadButton(
+            enabled: !ref.watch(authenticationViewModelProvider).isLoading,
+            onPressed: () => _onAuthenticateButtonPressed(context, ref),
+            icon: ref.read(authenticationViewModelProvider).isLoading
+                ? const SizedBox.square(
+                    dimension: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : null,
+            child: const Text('Se connecter'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // Hack to get password managers to work with Flutter Web
@@ -63,70 +128,19 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
     return Scaffold(
       appBar: const CustomAppBar(),
       body: Center(
-        child: ShadCard(
-          width: 350,
-          child: AutofillGroup(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Text(
-                    'Connexion',
-                    style: ShadTheme.of(context).textTheme.h3,
-                  ),
-                ),
-                const SizedBox(height: 30),
-                ShadInput(
-                  controller: usernameController,
-                  placeholder: const Text("Nom d'utilisateur"),
-                  autocorrect: false,
-                  textInputAction: TextInputAction.next,
-                  autofillHints: const [AutofillHints.username],
-                  onChanged: ref.read(authenticationViewModelProvider.notifier).onUsernameChanged,
-                ),
-                const SizedBox(height: 10),
-                ShadInput(
-                  focusNode: passwordFocusNode,
-                  controller: passwordController,
-                  placeholder: const Text('Mot de passe'),
-                  autocorrect: false,
-                  obscureText: ref.watch(obscuredPasswordProvider),
-                  textInputAction: TextInputAction.done,
-                  autofillHints: const [AutofillHints.password],
-                  onChanged: ref.read(authenticationViewModelProvider.notifier).onPasswordChanged,
-                  obscuringCharacter: '●',
-                  suffix: ShadButton.ghost(
-                    width: 24,
-                    height: 24,
-                    padding: EdgeInsets.zero,
-                    decoration: const ShadDecoration(
-                      secondaryBorder: ShadBorder.none,
-                      secondaryFocusedBorder: ShadBorder.none,
-                    ),
-                    onPressed: () => ref.read(obscuredPasswordProvider.notifier).state =
-                        !ref.read(obscuredPasswordProvider.notifier).state,
-                    icon: Icon(
-                      size: 16,
-                      ref.read(obscuredPasswordProvider) ? LucideIcons.eye : LucideIcons.eyeOff,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                ShadButton(
-                  enabled: !ref.watch(authenticationViewModelProvider).isLoading,
-                  onPressed: () => _onAuthenticateButtonPressed(context, ref),
-                  icon: ref.read(authenticationViewModelProvider).isLoading
-                      ? const SizedBox.square(
-                          dimension: 16,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
-                      : null,
-                  child: const Text('Se connecter'),
-                ),
-              ],
-            ),
-          ),
+        child: ShadResponsiveBuilder(
+          builder: (context, breakpoint) {
+            if (breakpoint == ShadTheme.of(context).breakpoints.tn) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 40, left: 30, right: 30),
+                child: _authenticationForm(),
+              );
+            }
+            return ShadCard(
+              width: 350,
+              child: _authenticationForm(),
+            );
+          },
         ),
       ),
     );

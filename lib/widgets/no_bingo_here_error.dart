@@ -17,26 +17,32 @@ class NoBingoHereError extends StatelessWidget {
     if (error != null) debugPrint('$error');
     if (trace != null) debugPrint('$trace');
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          'Pas de bingo ici',
-          textAlign: TextAlign.center,
-          style: ShadTheme.of(context).textTheme.h1Large,
-        ),
-        const SizedBox(height: 60),
-        Container(
-          clipBehavior: Clip.antiAlias,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-          ),
-          child: const ShadImage.square(
-            AppAssets.racoon,
-            size: 300,
-          ),
-        ),
-      ],
+    return ShadResponsiveBuilder(
+      builder: (context, breakpoint) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'Pas de bingo ici',
+              textAlign: TextAlign.center,
+              style: breakpoint <= ShadTheme.of(context).breakpoints.sm
+                  ? ShadTheme.of(context).textTheme.h2
+                  : ShadTheme.of(context).textTheme.h1Large,
+            ),
+            const SizedBox(height: 60),
+            Container(
+              clipBehavior: Clip.antiAlias,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+              ),
+              child: ShadImage.square(
+                AppAssets.racoon,
+                size: breakpoint <= ShadTheme.of(context).breakpoints.sm ? 200 : 300,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
