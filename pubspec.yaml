@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  auto_size_text_field: ^2.2.4
   envied: ^1.0.0
   flutter:
     sdk: flutter

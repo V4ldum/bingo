@@ -55,8 +55,4 @@ class AuthenticationViewModel extends _$AuthenticationViewModel {
     // None
     return null;
   }
-
-  bool isAuthenticated() {
-    return ref.read(databaseRepositoryProvider).isAuthenticated();
-  }
 }

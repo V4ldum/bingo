@@ -18,43 +18,53 @@ class BingoTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const tableSize = 750.0;
+    return ShadResponsiveBuilder(
+      builder: (context, breakpoint) {
+        final tableSize = switch (breakpoint) {
+          ShadBreakpointTN() => MediaQuery.of(context).size.width * .8,
+          ShadBreakpointSM() => 600.0,
+          ShadBreakpointMD() => 700.0,
+          _ => 750.0,
+        };
+        final cellSize = bingo.size >= 3 ? tableSize / bingo.size : 150.0;
 
-    return Table(
-      border: TableBorder.all(
-        color: ShadTheme.of(context).colorScheme.border,
-      ),
-      columnWidths: Map.fromEntries(
-        List.generate(bingo.size, (index) => MapEntry(index, FixedColumnWidth(tableSize / bingo.size))),
-      ),
-      children: List.generate(
-        bingo.size,
-        (rowIndex) => TableRow(
+        return Table(
+          border: TableBorder.all(
+            color: ShadTheme.of(context).colorScheme.border,
+          ),
+          columnWidths: Map.fromEntries(
+            List.generate(bingo.size, (index) => MapEntry(index, FixedColumnWidth(cellSize))),
+          ),
           children: List.generate(
             bingo.size,
-            (columnIndex) {
-              final currentIndex = (rowIndex * bingo.size) + columnIndex;
+            (rowIndex) => TableRow(
+              children: List.generate(
+                bingo.size,
+                (columnIndex) {
+                  final currentIndex = (rowIndex * bingo.size) + columnIndex;
 
-              return SizedBox.square(
-                key: UniqueKey(), // Disable Flutter's build optimization from breaking shuffling and resizing
-                dimension: tableSize / bingo.size,
-                child: GestureDetector(
-                  onTap: () => onCellTapped?.call(currentIndex),
-                  child: ColoredBox(
-                    color: ShadTheme.of(context).colorScheme.primary,
-                    child: Padding(
-                      padding: cellPadding,
-                      child: Center(
-                        child: itemBuilder(currentIndex),
+                  return SizedBox.square(
+                    key: UniqueKey(), // Disable Flutter's build optimization from breaking shuffling and resizing
+                    dimension: cellSize,
+                    child: GestureDetector(
+                      onTap: () => onCellTapped?.call(currentIndex),
+                      child: ColoredBox(
+                        color: ShadTheme.of(context).colorScheme.primary,
+                        child: Padding(
+                          padding: cellPadding,
+                          child: Center(
+                            child: itemBuilder(currentIndex),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              );
-            },
+                  );
+                },
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

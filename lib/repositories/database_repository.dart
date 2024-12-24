@@ -102,10 +102,6 @@ class DatabaseRepository {
     return true;
   }
 
-  bool isAuthenticated() {
-    return _client.auth.currentSession != null;
-  }
-
   void subscribeToRealtimeUpdates({required String bingoId, required void Function(BingoItemDto) callback}) {
     _client
         .channel('public:bingo_item')

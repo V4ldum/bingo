@@ -98,51 +98,64 @@ class BingoEditPage extends ConsumerWidget {
                   ),
                   const SizedBox(height: 40),
                   Center(
-                    child: BingoTable(
-                      bingo: bingo,
-                      cellPadding: EdgeInsets.zero,
-                      itemBuilder: (i) {
-                        final item = bingo.items.elementAtOrNull(i);
+                    child: ShadResponsiveBuilder(
+                      builder: (context, breakpoint) {
+                        return BingoTable(
+                          bingo: bingo,
+                          cellPadding: EdgeInsets.zero,
+                          itemBuilder: (i) {
+                            final item = bingo.items.elementAtOrNull(i);
 
-                        return Stack(
-                          alignment: Alignment.topRight,
-                          children: [
-                            // Avoid issue with rebuild optimization showing wrong UI
-                            SizedBox.expand(
-                              key: item != null ? Key(item.id) : null,
-                              child: ShadInput(
-                                initialValue: item?.text,
-                                cursorColor: ShadTheme.of(context).colorScheme.primaryForeground,
-                                textAlign: TextAlign.center,
-                                maxLines: null,
-                                padding: EdgeInsets.zero,
-                                decoration: ShadDecoration(
-                                  border: ShadBorder.none,
-                                  shape: BoxShape.rectangle,
-                                  focusedBorder: ShadBorder.fromBorderSide(
-                                    BorderSide(
-                                      color: ShadTheme.of(context).colorScheme.mutedForeground,
-                                      width: 5,
-                                      strokeAlign: BorderSide.strokeAlignOutside,
+                            return Stack(
+                              alignment: Alignment.topRight,
+                              children: [
+                                // Avoid issue with rebuild optimization showing wrong UI
+                                SizedBox.expand(
+                                  key: item != null ? Key(item.id) : null,
+                                  child: ShadInput(
+                                    initialValue: item?.text,
+                                    cursorColor: ShadTheme.of(context).colorScheme.primaryForeground,
+                                    textAlign: TextAlign.center,
+                                    maxLines: null,
+                                    padding: EdgeInsets.zero,
+                                    decoration: ShadDecoration(
+                                      border: ShadBorder.none,
+                                      shape: BoxShape.rectangle,
+                                      focusedBorder: ShadBorder.fromBorderSide(
+                                        BorderSide(
+                                          color: ShadTheme.of(context).colorScheme.mutedForeground,
+                                          width: 3,
+                                          strokeAlign: BorderSide.strokeAlignOutside,
+                                        ),
+                                      ),
                                     ),
+                                    style: switch (breakpoint) {
+                                      _ when (bingo.size < 3) => ShadTheme.of(context).textTheme.large,
+                                      ShadBreakpointTN() => ShadTheme.of(context).textTheme.small.copyWith(
+                                            // arbitrary dynamic font size for tiny screens
+                                            fontSize: MediaQuery.of(context).size.width / 45,
+                                          ),
+                                      ShadBreakpointSM() =>
+                                        ShadTheme.of(context).textTheme.p.copyWith(fontWeight: FontWeight.w600),
+                                      _ => ShadTheme.of(context).textTheme.large,
+                                    }
+                                        .copyWith(color: ShadTheme.of(context).colorScheme.primaryForeground),
+                                    onChanged: (value) => ref
+                                        .read(editBingoViewModelProvider(id: id).notifier)
+                                        .cell(value: value, index: i),
                                   ),
                                 ),
-                                style: ShadTheme.of(context).textTheme.large.copyWith(
-                                      color: ShadTheme.of(context).colorScheme.primaryForeground,
+                                if (item != null && item.isChecked)
+                                  IgnorePointer(
+                                    child: Image.asset(
+                                      AppAssets.bingoCross,
+                                      opacity: const AlwaysStoppedAnimation(0.8),
+                                      width: 40,
                                     ),
-                                onChanged: (value) =>
-                                    ref.read(editBingoViewModelProvider(id: id).notifier).cell(value: value, index: i),
-                              ),
-                            ),
-                            if (item != null && item.isChecked)
-                              IgnorePointer(
-                                child: Image.asset(
-                                  AppAssets.bingoCross,
-                                  opacity: const AlwaysStoppedAnimation(0.8),
-                                  width: 40,
-                                ),
-                              ),
-                          ],
+                                  ),
+                              ],
+                            );
+                          },
                         );
                       },
                     ),
