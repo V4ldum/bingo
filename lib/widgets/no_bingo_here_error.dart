@@ -21,6 +21,7 @@ class NoBingoHereError extends StatelessWidget {
       builder: (context, breakpoint) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          spacing: 60,
           children: [
             Text(
               'Pas de bingo ici',
@@ -29,7 +30,6 @@ class NoBingoHereError extends StatelessWidget {
                   ? ShadTheme.of(context).textTheme.h2
                   : ShadTheme.of(context).textTheme.h1Large,
             ),
-            const SizedBox(height: 60),
             Container(
               clipBehavior: Clip.antiAlias,
               decoration: const BoxDecoration(
