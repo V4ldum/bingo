@@ -48,3 +48,6 @@ app.*.map.json
 
 # Build
 **/_generated
+
+# Tests
+/coverage
