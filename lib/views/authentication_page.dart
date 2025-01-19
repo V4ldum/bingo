@@ -32,7 +32,7 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
       if (authenticated) {
         // We pass a value here to force the route to rebuild, not ideal but don't know
         // how to do otherwise
-        context.goNamed(AppRoute.admin, extra: true);
+        context.goNamed(AppRoutes.admin, extra: true);
       } else {
         ShadToaster.of(context).show(
           const ShadToast(

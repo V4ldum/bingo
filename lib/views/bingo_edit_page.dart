@@ -34,7 +34,7 @@ class BingoEditPage extends ConsumerWidget {
 
       await ref.read(editBingoViewModelProvider(id: id).notifier).editBingo();
       if (!ref.read(editBingoViewModelProvider(id: id)).hasError && context.mounted) {
-        context.goNamed(AppRoute.admin);
+        context.goNamed(AppRoutes.admin);
       }
     }
   }

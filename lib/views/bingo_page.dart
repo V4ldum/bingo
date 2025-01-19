@@ -47,7 +47,7 @@ class BingoPage extends ConsumerWidget {
           if (Supabase.instance.client.auth.currentSession != null)
             ref.read(bingoViewModelProvider(id)).maybeWhen(
                   data: (_) => ShadButton(
-                    onPressed: () => context.goNamed(AppRoute.bingoEdit, pathParameters: {'id': id}),
+                    onPressed: () => context.goNamed(AppRoutes.bingoEdit, pathParameters: {'id': id}),
                     icon: const Icon(
                       LucideIcons.pencil,
                       size: 16,

@@ -21,7 +21,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: EnhancedShadButton.link(
         padding: EdgeInsets.zero,
         middleClickPath: '/',
-        onPressed: () => context.goNamed(AppRoute.admin),
+        onPressed: () => context.goNamed(AppRoutes.admin),
         child: Row(
           children: [
             const Padding(

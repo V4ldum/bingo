@@ -45,7 +45,7 @@ class ListPage extends ConsumerWidget {
                             Supabase.instance.client.auth.signOut();
                             // We pass a value here to force the route to rebuild, not ideal but don't know
                             // how to do otherwise
-                            context.goNamed(AppRoute.admin, extra: false);
+                            context.goNamed(AppRoutes.admin, extra: false);
                           },
                           child: breakpoint < targetBreakpoint
                               ? const Expanded(
@@ -54,7 +54,7 @@ class ListPage extends ConsumerWidget {
                               : const Text('Se déconnecter'),
                         ),
                         ShadButton(
-                          onPressed: () => context.goNamed(AppRoute.bingoNew),
+                          onPressed: () => context.goNamed(AppRoutes.bingoNew),
                           icon: const Icon(
                             LucideIcons.plus,
                             size: 16,

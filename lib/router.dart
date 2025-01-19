@@ -9,21 +9,21 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 @protected
 final router = GoRouter(
-  initialLocation: AppRoute._adminPath,
+  initialLocation: AppRoutes._adminPath,
   errorBuilder: (_, __) => const NotFoundPage(),
   redirect: (_, state) {
-    final guard = [AppRoute._bingoNewPath, AppRoute._bingoEditPath];
+    final guard = [AppRoutes._bingoNewPath, AppRoutes._bingoEditPath];
     final authenticated = Supabase.instance.client.auth.currentSession != null;
 
     if (guard.contains(state.fullPath) && !authenticated) {
-      return AppRoute._adminPath;
+      return AppRoutes._adminPath;
     }
     return null;
   },
   routes: [
     GoRoute(
-      name: AppRoute.admin,
-      path: AppRoute._adminPath,
+      name: AppRoutes.admin,
+      path: AppRoutes._adminPath,
       builder: (_, __) {
         final authenticated = Supabase.instance.client.auth.currentSession != null;
 
@@ -34,25 +34,25 @@ final router = GoRouter(
       },
     ),
     GoRoute(
-      name: AppRoute.bingo,
-      path: AppRoute._bingoPath,
+      name: AppRoutes.bingo,
+      path: AppRoutes._bingoPath,
       builder: (_, state) => BingoPage(id: state.pathParameters['id']!),
     ),
     GoRoute(
-      name: AppRoute.bingoEdit,
-      path: AppRoute._bingoEditPath,
+      name: AppRoutes.bingoEdit,
+      path: AppRoutes._bingoEditPath,
       builder: (_, state) => BingoEditPage(id: state.pathParameters['id']),
     ),
     GoRoute(
-      name: AppRoute.bingoNew,
-      path: AppRoute._bingoNewPath,
+      name: AppRoutes.bingoNew,
+      path: AppRoutes._bingoNewPath,
       builder: (_, __) => const BingoEditPage(),
     ),
   ],
 );
 
-class AppRoute {
-  AppRoute._();
+class AppRoutes {
+  AppRoutes._();
 
   static const String admin = 'admin';
   static const String _adminPath = '/';

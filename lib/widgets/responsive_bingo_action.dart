@@ -96,8 +96,8 @@ class _ResponsiveBingoActionState extends ConsumerState<ResponsiveBingoAction> {
     final targetBreakpoint = ShadTheme.of(context).breakpoints.sm;
     final buttons = [
       EnhancedShadButton.ghost(
-        middleClickPath: '${AppRoute.bingo}/${widget.bingo.id}',
-        onPressed: () => context.goNamed(AppRoute.bingo, pathParameters: {'id': widget.bingo.id}),
+        middleClickPath: '${AppRoutes.bingo}/${widget.bingo.id}',
+        onPressed: () => context.goNamed(AppRoutes.bingo, pathParameters: {'id': widget.bingo.id}),
         icon: const Icon(
           LucideIcons.eye,
           size: 18,
