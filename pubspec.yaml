@@ -32,7 +32,6 @@ dependencies:
   envied: ^1.0.0
   flutter:
     sdk: flutter
-  flutter_lucide: ^1.6.0
   flutter_riverpod: ^2.6.1
   flutter_web_plugins:
     sdk: flutter
@@ -41,13 +40,14 @@ dependencies:
   image_downloader_web: ^2.0.6
   intl: ^0.19.0
   json_annotation: ^4.9.0
+  lucide_icons_flutter: ^1.2.5
   meta_package:
     git:
       url: https://github.com/V4ldum/meta-package
       ref: main
   riverpod_annotation: ^2.6.1
   rust: ^2.0.2
-  shadcn_ui: ^0.16.0
+  shadcn_ui: ^0.18.0
   supabase_flutter: ^2.8.1
   universal_html: ^2.2.4 # TODO WASM when supported
 

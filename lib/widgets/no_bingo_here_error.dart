@@ -35,9 +35,10 @@ class NoBingoHereError extends StatelessWidget {
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
               ),
-              child: ShadImage.square(
+              child: Image.asset(
+                width: breakpoint <= ShadTheme.of(context).breakpoints.sm ? 200 : 300,
+                height: breakpoint <= ShadTheme.of(context).breakpoints.sm ? 200 : 300,
                 AppAssets.racoon,
-                size: breakpoint <= ShadTheme.of(context).breakpoints.sm ? 200 : 300,
               ),
             ),
           ],

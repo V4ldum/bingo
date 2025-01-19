@@ -122,7 +122,7 @@ class BingoEditPage extends ConsumerWidget {
                                       border: ShadBorder.none,
                                       shape: BoxShape.rectangle,
                                       focusedBorder: ShadBorder.fromBorderSide(
-                                        BorderSide(
+                                        ShadBorderSide(
                                           color: ShadTheme.of(context).colorScheme.mutedForeground,
                                           width: 3,
                                           strokeAlign: BorderSide.strokeAlignOutside,

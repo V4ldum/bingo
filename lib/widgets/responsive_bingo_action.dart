@@ -34,7 +34,7 @@ class ResponsiveBingoAction extends ConsumerStatefulWidget {
               secondaryBorder: ShadBorder.none,
               secondaryFocusedBorder: ShadBorder.none,
             ),
-            icon: const ShadImage.square(
+            icon: const Icon(
               size: 16,
               LucideIcons.copy,
             ),
