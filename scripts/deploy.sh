@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-HOME="/home/bingo"
+HOME="/root/bingo"
 
 cd "$HOME/bingo"
 git pull
