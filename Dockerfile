@@ -16,7 +16,7 @@ RUN dart run build_runner build | grep -Ev "^\[INFO\]"
 RUN flutter build web --release > /dev/null 2>&1
 
 # Run
-FROM nginx:slim AS runner
+FROM nginx:alpine-slim AS runner
 # Update nginx config
 RUN sed -i '/location \/ {/,/}/s|^\(.*index  index.html index.htm;\)|\1\n        try_files \$uri \$uri/ \$uri.html /index.html;|' /etc/nginx/conf.d/default.conf
 
