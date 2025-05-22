@@ -83,8 +83,9 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
                 secondaryBorder: ShadBorder.none,
                 secondaryFocusedBorder: ShadBorder.none,
               ),
-              onPressed: () => ref.read(obscuredPasswordProvider.notifier).state =
-                  !ref.read(obscuredPasswordProvider.notifier).state,
+              onPressed: () => ref.read(obscuredPasswordProvider.notifier).state = !ref
+                  .read(obscuredPasswordProvider.notifier)
+                  .state,
               icon: Icon(
                 size: 16,
                 ref.read(obscuredPasswordProvider) ? LucideIcons.eye : LucideIcons.eyeOff,

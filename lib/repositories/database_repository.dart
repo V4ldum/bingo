@@ -65,24 +65,31 @@ class DatabaseRepository {
   }
 
   Future<void> updateBingo(Bingo bingo) async {
-    await _client.from(_kBingoTableName).update({
-      _kBingoTitleColumnName: bingo.title,
-      _kBingoSizeColumnName: bingo.size,
-      _kBingoCreatedColumnName: DateFormat('MM-dd-yyyy').format(bingo.created), // american spergs
-    }).eq(_kBingoIdColumnName, bingo.id);
+    await _client
+        .from(_kBingoTableName)
+        .update({
+          _kBingoTitleColumnName: bingo.title,
+          _kBingoSizeColumnName: bingo.size,
+          _kBingoCreatedColumnName: DateFormat('MM-dd-yyyy').format(bingo.created), // american spergs
+        })
+        .eq(_kBingoIdColumnName, bingo.id);
 
     for (final item in bingo.items) {
-      await _client.from(_kBingoItemTableName).update({
-        _kBingoItemTextColumnName: item.text,
-        _kBingoItemIndexColumnName: item.index,
-      }).eq(_kBingoItemIdColumnName, item.id);
+      await _client
+          .from(_kBingoItemTableName)
+          .update({
+            _kBingoItemTextColumnName: item.text,
+            _kBingoItemIndexColumnName: item.index,
+          })
+          .eq(_kBingoItemIdColumnName, item.id);
     }
   }
 
   Future<void> checkBingoItem(String bingoItemId, {required bool isChecked}) async {
     await _client
         .from(_kBingoItemTableName)
-        .update({_kBingoItemIsCheckedColumnName: isChecked}).eq(_kBingoItemIdColumnName, bingoItemId);
+        .update({_kBingoItemIsCheckedColumnName: isChecked})
+        .eq(_kBingoItemIdColumnName, bingoItemId);
   }
 
   Future<void> deleteBingo(String id) async {

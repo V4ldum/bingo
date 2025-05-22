@@ -32,8 +32,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             Text(
               'Bingo Builder',
               style: ShadTheme.of(context).textTheme.large.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ),

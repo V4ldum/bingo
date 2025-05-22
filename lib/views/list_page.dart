@@ -37,7 +37,9 @@ class ListPage extends ConsumerWidget {
         return Scaffold(
           appBar: CustomAppBar(
             actions: [
-              ref.watch(bingoListViewModelProvider).maybeWhen(
+              ref
+                  .watch(bingoListViewModelProvider)
+                  .maybeWhen(
                     data: (_) {
                       final buttons = [
                         ShadButton.secondary(
@@ -88,7 +90,9 @@ class ListPage extends ConsumerWidget {
             ],
           ),
           body: Center(
-            child: ref.watch(bingoListViewModelProvider).when(
+            child: ref
+                .watch(bingoListViewModelProvider)
+                .when(
                   data: (bingos) => ConstrainedBox(
                     constraints: BoxConstraints(
                       maxWidth: columnSizes.fold(0, (prev, e) => prev + e),

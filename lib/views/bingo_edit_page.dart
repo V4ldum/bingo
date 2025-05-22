@@ -49,7 +49,9 @@ class BingoEditPage extends ConsumerWidget {
     return Scaffold(
       appBar: CustomAppBar(
         actions: [
-          ref.read(editBingoViewModelProvider(id: id)).maybeWhen(
+          ref
+              .read(editBingoViewModelProvider(id: id))
+              .maybeWhen(
                 data: (_) => ShadButton(
                   onPressed: () => _onCreateButtonPressed(context, ref),
                   icon: Icon(
@@ -64,7 +66,9 @@ class BingoEditPage extends ConsumerWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 40),
-        child: ref.read(editBingoViewModelProvider(id: id)).when(
+        child: ref
+            .read(editBingoViewModelProvider(id: id))
+            .when(
               data: (bingo) => Column(
                 children: [
                   ConstrainedBox(
@@ -132,14 +136,14 @@ class BingoEditPage extends ConsumerWidget {
                                     style: switch (breakpoint) {
                                       _ when (bingo.size < 3) => ShadTheme.of(context).textTheme.large,
                                       ShadBreakpointTN() => ShadTheme.of(context).textTheme.small.copyWith(
-                                            // arbitrary dynamic font size for tiny screens
-                                            fontSize: MediaQuery.of(context).size.width / 45,
-                                          ),
-                                      ShadBreakpointSM() =>
-                                        ShadTheme.of(context).textTheme.p.copyWith(fontWeight: FontWeight.w600),
+                                        // arbitrary dynamic font size for tiny screens
+                                        fontSize: MediaQuery.of(context).size.width / 45,
+                                      ),
+                                      ShadBreakpointSM() => ShadTheme.of(
+                                        context,
+                                      ).textTheme.p.copyWith(fontWeight: FontWeight.w600),
                                       _ => ShadTheme.of(context).textTheme.large,
-                                    }
-                                        .copyWith(color: ShadTheme.of(context).colorScheme.primaryForeground),
+                                    }.copyWith(color: ShadTheme.of(context).colorScheme.primaryForeground),
                                     onChanged: (value) => ref
                                         .read(editBingoViewModelProvider(id: id).notifier)
                                         .cell(value: value, index: i),

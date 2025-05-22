@@ -15,8 +15,9 @@ class ImageDownloader {
   static Future<bool> downloadAsImage(Bingo bingo) async {
     final res = await Option.async<Uint8List>(($) async {
       final currentContext = Option.of(downloadKey.currentContext)[$]; // returns early if null
-      final renderObject =
-          Option.of(currentContext.findRenderObject() as RenderRepaintBoundary?)[$]; // returns early if null
+      final renderObject = Option.of(
+        currentContext.findRenderObject() as RenderRepaintBoundary?,
+      )[$]; // returns early if null
 
       final image = await renderObject.toImage();
       final byteData = Option.of(await image.toByteData(format: ImageByteFormat.png))[$]; // returns early if null

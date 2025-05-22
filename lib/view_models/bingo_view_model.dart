@@ -28,7 +28,9 @@ class BingoViewModel extends _$BingoViewModel {
 
   void _enableDatabaseRealtimeUpdates(String bingoId) {
     debugPrint("Enabling realtime updates for the bingo '$bingoId'");
-    ref.read(databaseRepositoryProvider).subscribeToRealtimeUpdates(
+    ref
+        .read(databaseRepositoryProvider)
+        .subscribeToRealtimeUpdates(
           bingoId: bingoId,
           callback: (newItem) => _realtimeUpdateRebuild(BingoItem.fromDto(newItem)),
         );

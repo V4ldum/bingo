@@ -27,8 +27,8 @@ class EnhancedShadButton extends StatelessWidget {
     this.padding,
     this.onPressed,
     this.middleClickPath,
-  })  : _variant = ShadButtonVariant.link,
-        icon = null;
+  }) : _variant = ShadButtonVariant.link,
+       icon = null;
 
   final Widget? icon;
   final Widget? child;
@@ -41,40 +41,40 @@ class EnhancedShadButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final widget = switch (_variant) {
       ShadButtonVariant.primary => ShadButton(
-          onPressed: onPressed,
-          padding: padding,
-          icon: icon,
-          child: child,
-        ),
+        onPressed: onPressed,
+        padding: padding,
+        icon: icon,
+        child: child,
+      ),
       ShadButtonVariant.destructive => ShadButton.destructive(
-          onPressed: onPressed,
-          padding: padding,
-          icon: icon,
-          child: child,
-        ),
+        onPressed: onPressed,
+        padding: padding,
+        icon: icon,
+        child: child,
+      ),
       ShadButtonVariant.outline => ShadButton.outline(
-          onPressed: onPressed,
-          padding: padding,
-          icon: icon,
-          child: child,
-        ),
+        onPressed: onPressed,
+        padding: padding,
+        icon: icon,
+        child: child,
+      ),
       ShadButtonVariant.secondary => ShadButton.secondary(
-          onPressed: onPressed,
-          padding: padding,
-          icon: icon,
-          child: child,
-        ),
+        onPressed: onPressed,
+        padding: padding,
+        icon: icon,
+        child: child,
+      ),
       ShadButtonVariant.ghost => ShadButton.ghost(
-          onPressed: onPressed,
-          padding: padding,
-          icon: icon,
-          child: child,
-        ),
+        onPressed: onPressed,
+        padding: padding,
+        icon: icon,
+        child: child,
+      ),
       ShadButtonVariant.link => ShadButton.link(
-          onPressed: onPressed,
-          padding: padding,
-          child: child,
-        ),
+        onPressed: onPressed,
+        padding: padding,
+        child: child,
+      ),
     };
 
     if (middleClickPath == null) {

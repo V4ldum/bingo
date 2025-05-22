@@ -13,3 +13,7 @@ analyzer:
     - custom_lint
   exclude:
     - lib/**/_generated/** # Exclude all generated filed that you have no control over
+
+formatter:
+  page_width: 120
+  trailing_commas: preserve 

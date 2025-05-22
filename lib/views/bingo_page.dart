@@ -45,7 +45,9 @@ class BingoPage extends ConsumerWidget {
       appBar: CustomAppBar(
         actions: [
           if (Supabase.instance.client.auth.currentSession != null)
-            ref.read(bingoViewModelProvider(id)).maybeWhen(
+            ref
+                .read(bingoViewModelProvider(id))
+                .maybeWhen(
                   data: (_) => ShadButton(
                     onPressed: () => context.goNamed(AppRoutes.bingoEdit, pathParameters: {'id': id}),
                     icon: const Icon(
@@ -60,7 +62,9 @@ class BingoPage extends ConsumerWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 40),
-        child: ref.watch(bingoViewModelProvider(id)).when(
+        child: ref
+            .watch(bingoViewModelProvider(id))
+            .when(
               data: (bingo) => SingleChildScrollView(
                 child: ShadResponsiveBuilder(
                   builder: (context, breakpoint) => Column(
@@ -100,14 +104,14 @@ class BingoPage extends ConsumerWidget {
                                       style: switch (breakpoint) {
                                         _ when (bingo.size < 3) => ShadTheme.of(context).textTheme.large,
                                         ShadBreakpointTN() => ShadTheme.of(context).textTheme.small.copyWith(
-                                              // arbitrary dynamic font size for tiny screens
-                                              fontSize: MediaQuery.of(context).size.width / 45,
-                                            ),
-                                        ShadBreakpointSM() =>
-                                          ShadTheme.of(context).textTheme.p.copyWith(fontWeight: FontWeight.w600),
+                                          // arbitrary dynamic font size for tiny screens
+                                          fontSize: MediaQuery.of(context).size.width / 45,
+                                        ),
+                                        ShadBreakpointSM() => ShadTheme.of(
+                                          context,
+                                        ).textTheme.p.copyWith(fontWeight: FontWeight.w600),
                                         _ => ShadTheme.of(context).textTheme.large,
-                                      }
-                                          .copyWith(color: ShadTheme.of(context).colorScheme.primaryForeground),
+                                      }.copyWith(color: ShadTheme.of(context).colorScheme.primaryForeground),
                                     ),
                                     if (item.isChecked)
                                       Image.asset(
