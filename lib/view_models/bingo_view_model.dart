@@ -18,7 +18,7 @@ class BingoViewModel extends _$BingoViewModel {
     final value = Option.of(state.valueOrNull);
 
     if (value case Some(:final v)) {
-      final item = v.items.iter().where((item) => item.id == id).next();
+      final item = Option.of(v.items.iter().where((item) => item.id == id).next());
 
       if (item case Some(:final v)) {
         ref.read(databaseRepositoryProvider).checkBingoItem(id, isChecked: !v.isChecked);

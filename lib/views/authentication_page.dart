@@ -47,6 +47,7 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
     return AutofillGroup(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 8),
