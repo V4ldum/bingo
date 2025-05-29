@@ -50,7 +50,7 @@ class BingoPage extends ConsumerWidget {
                 .maybeWhen(
                   data: (_) => ShadButton(
                     onPressed: () => context.goNamed(AppRoutes.bingoEdit, pathParameters: {'id': id}),
-                    icon: const Icon(
+                    leading: const Icon(
                       LucideIcons.pencil,
                       size: 16,
                     ),
@@ -128,7 +128,7 @@ class BingoPage extends ConsumerWidget {
                       const SizedBox(height: 40),
                       ShadButton.outline(
                         onPressed: () => _onDownloadButtonPressed(context, bingo),
-                        icon: const Icon(
+                        leading: const Icon(
                           LucideIcons.download,
                           size: 16,
                         ),

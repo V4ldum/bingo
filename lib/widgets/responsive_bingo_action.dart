@@ -28,7 +28,7 @@ class ResponsiveBingoAction extends ConsumerStatefulWidget {
         title: const Text('Partager'),
         child: ShadInput(
           controller: controller,
-          suffix: ShadButton.ghost(
+          trailing: ShadIconButton.ghost(
             padding: EdgeInsets.zero,
             decoration: const ShadDecoration(
               secondaryBorder: ShadBorder.none,
@@ -115,7 +115,7 @@ class _ResponsiveBingoActionState extends ConsumerState<ResponsiveBingoAction> {
           }
           widget._onShareButtonPressed(context, widget.bingo.id);
         },
-        icon: const Icon(
+        leading: const Icon(
           LucideIcons.forward,
           size: 18,
         ),
@@ -127,7 +127,7 @@ class _ResponsiveBingoActionState extends ConsumerState<ResponsiveBingoAction> {
       ),
       ShadButton.ghost(
         onPressed: () => widget._onDeleteButtonPressed(context, ref, id: widget.bingo.id, title: widget.bingo.title),
-        icon: const Icon(
+        leading: const Icon(
           LucideIcons.trash,
           size: 18,
         ),
@@ -157,7 +157,7 @@ class _ResponsiveBingoActionState extends ConsumerState<ResponsiveBingoAction> {
           children: buttons,
         ),
       ),
-      child: ShadButton.ghost(
+      child: ShadIconButton.ghost(
         onPressed: controller.toggle,
         icon: const Icon(
           LucideIcons.ellipsisVertical,

@@ -54,7 +54,7 @@ class BingoEditPage extends ConsumerWidget {
               .maybeWhen(
                 data: (_) => ShadButton(
                   onPressed: () => _onCreateButtonPressed(context, ref),
-                  icon: Icon(
+                  leading: Icon(
                     id != null ? LucideIcons.pencil : LucideIcons.plus,
                     size: 16,
                   ),
@@ -165,7 +165,7 @@ class BingoEditPage extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 40),
-                  ShadButton.outline(
+                  ShadIconButton.outline(
                     onPressed: ref.read(editBingoViewModelProvider(id: id).notifier).shuffle,
                     icon: const Icon(
                       LucideIcons.shuffle,

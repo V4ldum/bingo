@@ -103,7 +103,7 @@ class DatabaseRepository {
         email: '$username@noemail.com',
         password: password,
       );
-    } catch (e) {
+    } on Exception catch (_) {
       return false;
     }
     return true;

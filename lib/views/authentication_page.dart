@@ -76,7 +76,7 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
             autofillHints: const [AutofillHints.password],
             onChanged: ref.read(authenticationViewModelProvider.notifier).onPasswordChanged,
             obscuringCharacter: '●',
-            suffix: ShadButton.ghost(
+            trailing: ShadButton.ghost(
               width: 24,
               height: 24,
               padding: EdgeInsets.zero,
@@ -87,7 +87,7 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
               onPressed: () => ref.read(obscuredPasswordProvider.notifier).state = !ref
                   .read(obscuredPasswordProvider.notifier)
                   .state,
-              icon: Icon(
+              leading: Icon(
                 size: 16,
                 ref.read(obscuredPasswordProvider) ? LucideIcons.eye : LucideIcons.eyeOff,
               ),
@@ -97,7 +97,7 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
           ShadButton(
             enabled: !ref.watch(authenticationViewModelProvider).isLoading,
             onPressed: () => _onAuthenticateButtonPressed(context, ref),
-            icon: ref.read(authenticationViewModelProvider).isLoading
+            leading: ref.read(authenticationViewModelProvider).isLoading
                 ? const SizedBox.square(
                     dimension: 16,
                     child: CircularProgressIndicator(strokeWidth: 2),

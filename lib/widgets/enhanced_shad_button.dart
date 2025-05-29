@@ -43,31 +43,31 @@ class EnhancedShadButton extends StatelessWidget {
       ShadButtonVariant.primary => ShadButton(
         onPressed: onPressed,
         padding: padding,
-        icon: icon,
+        leading: icon,
         child: child,
       ),
       ShadButtonVariant.destructive => ShadButton.destructive(
         onPressed: onPressed,
         padding: padding,
-        icon: icon,
+        leading: icon,
         child: child,
       ),
       ShadButtonVariant.outline => ShadButton.outline(
         onPressed: onPressed,
         padding: padding,
-        icon: icon,
+        leading: icon,
         child: child,
       ),
       ShadButtonVariant.secondary => ShadButton.secondary(
         onPressed: onPressed,
         padding: padding,
-        icon: icon,
+        leading: icon,
         child: child,
       ),
       ShadButtonVariant.ghost => ShadButton.ghost(
         onPressed: onPressed,
         padding: padding,
-        icon: icon,
+        leading: icon,
         child: child,
       ),
       ShadButtonVariant.link => ShadButton.link(

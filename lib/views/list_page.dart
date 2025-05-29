@@ -30,7 +30,7 @@ class ListPage extends ConsumerWidget {
           },
           switch (breakpoint) {
             ShadBreakpointTN() => 80.0,
-            _ => 180.0,
+            _ => 220.0,
           },
         ];
 
@@ -57,7 +57,7 @@ class ListPage extends ConsumerWidget {
                         ),
                         ShadButton(
                           onPressed: () => context.goNamed(AppRoutes.bingoNew),
-                          icon: const Icon(
+                          leading: const Icon(
                             LucideIcons.plus,
                             size: 16,
                           ),
@@ -74,7 +74,7 @@ class ListPage extends ConsumerWidget {
                         return Row(spacing: 10, children: buttons);
                       }
                       // Tiny screen
-                      return ShadButton.ghost(
+                      return ShadIconButton.ghost(
                         onPressed: () => showShadSheet<void>(
                           context: context,
                           side: ShadSheetSide.right,
