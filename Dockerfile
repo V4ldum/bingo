@@ -7,8 +7,7 @@ RUN git clone https://github.com/flutter/flutter.git /flutter
 ENV PATH="/flutter/bin:/flutter/bin/cache/dart-sdk/bin:${PATH}"
 
 # Config
-RUN dart --disable-analytics
-RUN flutter --disable-analytics
+RUN flutter config --no-analytics
 RUN flutter channel stable > /dev/null 2>&1
 RUN flutter upgrade > /dev/null 2>&1
 RUN flutter config --enable-web 2>&1

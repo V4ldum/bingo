@@ -1,0 +1,56 @@
+name: pipeline
+on:
+ push:
+   branches:
+     - "main"
+
+permissions:
+  packages: write
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+
+      - name: Config Flutter
+        run: flutter config --no-analytics --enable-web
+
+      - name: Clean project
+        run: flutter clean
+          
+      - name: Install dependencies
+        run: flutter pub get
+        
+      - name: Rebuild generated code
+        run: |
+          rm -rf .dart_tool
+          dart run build_runner build -d
+
+      - name: Analyze project source
+        run: dart analyze
+
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    needs:
+      - run-tests
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: https://ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/v4ldum/bingo:latest
+            ghcr.io/v4ldum/bingo:${{ github.sha }}
