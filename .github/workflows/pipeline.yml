@@ -35,7 +35,7 @@ jobs:
         run: dart analyze
 
   build-and-push-image:
-    runs-on: ubuntu-arm
+    runs-on: ubuntu-24.04-arm
     needs:
       - run-tests
     steps:
