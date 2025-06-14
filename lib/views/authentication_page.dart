@@ -98,9 +98,12 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
             enabled: !ref.watch(authenticationViewModelProvider).isLoading,
             onPressed: () => _onAuthenticateButtonPressed(context, ref),
             leading: ref.read(authenticationViewModelProvider).isLoading
-                ? const SizedBox.square(
+                ? SizedBox.square(
                     dimension: 16,
-                    child: CircularProgressIndicator(strokeWidth: 2),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: ShadTheme.of(context).colorScheme.primaryForeground,
+                    ),
                   )
                 : null,
             child: const Text('Se connecter'),
