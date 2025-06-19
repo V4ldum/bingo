@@ -85,7 +85,8 @@ jobs:
       - name: Deploy
         env:
           DOCKER_HOST: ${{ secrets.SSH_HOST }}
-        run: |          
+        run: |         
+          docker ps
           # Pull new image
           docker pull ghcr.io/v4ldum/bingo
           
