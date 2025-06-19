@@ -64,3 +64,59 @@ jobs:
           tags: |
             ghcr.io/v4ldum/bingo:latest
             ghcr.io/v4ldum/bingo:${{ github.sha }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs:
+      - build-and-push-image
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          eval $(ssh-agent -s)
+          ssh-add ~/.ssh/id_ed25519 > /dev/null 2>&1
+
+      - name: Deploy
+        env:
+          DOCKER_HOST: ${{ secrets.SSH_HOST }}"
+        run: |          
+          # Pull new image
+          docker pull ghcr.io/v4ldum/bingo
+          
+          # Scale up container
+          docker compose up -d --no-deps --scale bingo=2 --no-recreate bingo
+          
+          # Get oldest container's id
+          OLD=$(docker ps -f "name=bingo" --format "{{.ID}} {{.CreatedAt}}" | sort -k2 | head -n 1 | awk '{print $1}')
+          
+          # Get newest container's id
+          NEW=$(docker ps --filter "name=bingo" --format "{{.ID}} {{.CreatedAt}}" | sort -k2 | tail -n 1 | awk '{print $1}')
+          
+          # Wait for container to be up
+          for attempt in {1..6}; do
+            sleep 5
+            CODE=$(docker inspect --format "{{.State.ExitCode}}" "$NEW")
+            if [ "$CODE" = "0" ]; then
+              break
+            fi
+          done
+          
+          # Scale down
+          CODE=$(docker inspect --format "{{.State.ExitCode}}" "$NEW")
+          if [ "$CODE" = "0" ]; then
+            # Delete old and scale down if healthy 
+            docker container rm -f "$OLD"
+            docker compose up -d --no-deps --scale bingo=1 --no-recreate bingo
+          
+            docker rename "$NEW" bingo
+          else
+            # Delete new and scale down if unhealthy
+            docker container rm -f "$NEW"
+            docker compose up -d --no-deps --scale bingo=1 --no-recreate bingo
+            exit 1
+          fi

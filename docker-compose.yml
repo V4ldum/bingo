@@ -1,8 +1,9 @@
 services:
   bingo:
-    container_name: bingo
-    image: bingo:latest
+    image: ghcr.io/v4ldum/bingo:latest
     restart: unless-stopped
+    networks:
+      - "netv6"
     environment:
       - TZ=Europe/Paris
     labels:
@@ -10,3 +11,7 @@ services:
       - "traefik.http.routers.bingo.tls=true"
       - "traefik.http.routers.bingo.entrypoints=websecure"
       - "traefik.http.routers.bingo.rule=Host(`bingo.valdum.dev`)"
+
+networks:
+  netv6:
+    external: true
