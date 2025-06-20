@@ -98,7 +98,7 @@ jobs:
           DOCKER_HOST: ${{ secrets.SSH_HOST }}
         run: |
           # Login to ghcr
-          docker login -u V4ldum -p "${{ secrets.GITHUB_TOKEN }}"
+          docker login -u V4ldum -p "${{ secrets.GITHUB_TOKEN }}" ghcr.io 
           
           # Pull new image
           docker pull ghcr.io/v4ldum/bingo
