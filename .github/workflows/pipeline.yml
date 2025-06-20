@@ -9,62 +9,62 @@ permissions:
   packages: write
 
 jobs:
-#  run-tests:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v4
-#      - uses: subosito/flutter-action@v2
-#
-#      - name: Config Flutter
-#        run: flutter config --no-analytics --enable-web
-#
-#      - name: Clean project
-#        run: flutter clean
-#
-#      - name: Install dependencies
-#        run: flutter pub get
-#
-#      - name: Create env file
-#        run: echo "${{ secrets.ENV }}" > .env
-#
-#      - name: Rebuild generated code
-#        run: |
-#          rm -rf .dart_tool
-#          dart run build_runner build -d
-#
-#      - name: Analyze project source
-#        run: dart analyze
-#
-#  build-and-push-image:
-#    runs-on: ubuntu-24.04-arm
-#    needs:
-#      - run-tests
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v4
-#
-#      - name: Create env file
-#        run: echo "${{ secrets.ENV }}" > .env
-#
-#      - name: Log in to the Container registry
-#        uses: docker/login-action@v3
-#        with:
-#          registry: https://ghcr.io
-#          username: ${{ github.actor }}
-#          password: ${{ secrets.GITHUB_TOKEN }}
-#
-#      - name: Set up Docker Buildx # For cross-platform support
-#        uses: docker/setup-buildx-action@v3
-#
-#      - name: Build and push Docker image
-#        uses: docker/build-push-action@v6
-#        with:
-#          context: .
-#          push: true
-#          platforms: linux/arm64
-#          tags: |
-#            ghcr.io/v4ldum/bingo:latest
-#            ghcr.io/v4ldum/bingo:${{ github.sha }}
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+
+      - name: Config Flutter
+        run: flutter config --no-analytics --enable-web
+
+      - name: Clean project
+        run: flutter clean
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Create env file
+        run: echo "${{ secrets.ENV }}" > .env
+
+      - name: Rebuild generated code
+        run: |
+          rm -rf .dart_tool
+          dart run build_runner build -d
+
+      - name: Analyze project source
+        run: dart analyze
+
+  build-and-push-image:
+    runs-on: ubuntu-24.04-arm
+    needs:
+      - run-tests
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create env file
+        run: echo "${{ secrets.ENV }}" > .env
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: https://ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx # For cross-platform support
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          platforms: linux/arm64
+          tags: |
+            ghcr.io/v4ldum/bingo:latest
+            ghcr.io/v4ldum/bingo:${{ github.sha }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -96,40 +96,37 @@ jobs:
       - name: Deploy
         env:
           DOCKER_HOST: ${{ secrets.SSH_HOST }}
-        run: |         
-          docker ps
-#          # Pull new image
-#          docker pull ghcr.io/v4ldum/bingo
-#
-#          # Scale up container
-#          docker compose up -d --no-deps --scale bingo=2 --no-recreate bingo
-#
-#          # Get oldest container's id
-#          OLD=$(docker ps -f "name=bingo" --format "{{.ID}} {{.CreatedAt}}" | sort -k2 | head -n 1 | awk '{print $1}')
-#
-#          # Get newest container's id
-#          NEW=$(docker ps --filter "name=bingo" --format "{{.ID}} {{.CreatedAt}}" | sort -k2 | tail -n 1 | awk '{print $1}')
-#
-#          # Wait for container to be up
-#          for attempt in {1..6}; do
-#            sleep 5
-#            CODE=$(docker inspect --format "{{.State.ExitCode}}" "$NEW")
-#            if [ "$CODE" = "0" ]; then
-#              break
-#            fi
-#          done
-#
-#          # Scale down
-#          CODE=$(docker inspect --format "{{.State.ExitCode}}" "$NEW")
-#          if [ "$CODE" = "0" ]; then
-#            # Delete old and scale down if healthy
-#            docker container rm -f "$OLD"
-#            docker compose up -d --no-deps --scale bingo=1 --no-recreate bingo
-#
-#            docker rename "$NEW" bingo
-#          else
-#            # Delete new and scale down if unhealthy
-#            docker container rm -f "$NEW"
-#            docker compose up -d --no-deps --scale bingo=1 --no-recreate bingo
-#            exit 1
-#          fi
+        run: |
+          # Pull new image
+          docker pull ghcr.io/v4ldum/bingo
+
+          # Scale up container
+          docker compose up -d --no-deps --scale bingo=2 --no-recreate bingo
+
+          # Get container IDs
+          OLD=$(docker ps -f "name=bingo" --format "{{.ID}} {{.CreatedAt}}" | sort -k2 | head -n 1 | awk '{print $1}')
+          NEW=$(docker ps --filter "name=bingo" --format "{{.ID}} {{.CreatedAt}}" | sort -k2 | tail -n 1 | awk '{print $1}')
+
+          # Wait for container to be up
+          for attempt in {1..6}; do
+            sleep 5
+            CODE=$(docker inspect --format "{{.State.ExitCode}}" "$NEW")
+            if [ "$CODE" = "0" ]; then
+              break
+            fi
+          done
+
+          # Scale down
+          CODE=$(docker inspect --format "{{.State.ExitCode}}" "$NEW")
+          if [ "$CODE" = "0" ]; then
+            # Delete old and scale down if healthy
+            docker container rm -f "$OLD"
+            docker compose up -d --no-deps --scale bingo=1 --no-recreate bingo
+
+            docker rename "$NEW" bingo
+          else
+            # Delete new and scale down if unhealthy
+            docker container rm -f "$NEW"
+            docker compose up -d --no-deps --scale bingo=1 --no-recreate bingo
+            exit 1
+          fi
