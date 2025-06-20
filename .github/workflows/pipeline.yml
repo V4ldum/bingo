@@ -82,12 +82,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup SSH key
+        env:
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_SERVER: ${{ secrets.SSH_SERVER }}
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           eval $(ssh-agent -s)
           ssh-add ~/.ssh/id_ed25519 > /dev/null 2>&1
+          ssh-keyscan -p "$SSH_PORT" "$SSH_SERVER" >> ~/.ssh/known_hosts
 
       - name: Deploy
         env:
