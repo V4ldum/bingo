@@ -8,13 +8,13 @@ ENV PATH="/flutter/bin:/flutter/bin/cache/dart-sdk/bin:${PATH}"
 
 # Config
 RUN flutter config --no-analytics
-RUN flutter channel stable > /dev/null 2>&1
-RUN flutter upgrade > /dev/null 2>&1
-RUN flutter config --enable-web 2>&1
+RUN flutter channel stable
+RUN flutter upgrade
+RUN flutter config --enable-web
 
 # Build
-RUN dart run build_runner build | grep -Ev "^\[INFO\]"
-RUN flutter build web --release > /dev/null 2>&1
+RUN dart run build_runner build
+RUN flutter build web --release
 
 
 FROM nginx:alpine-slim
