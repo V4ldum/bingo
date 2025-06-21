@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - "main"
+      
+permissions:
+  packages: write  # Required to delete GHCR packages
+  contents: read   # Required for actions/checkout
 
 jobs:
   cleanup:
