@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:universal_html/html.dart' as html;
+import 'package:web/web.dart' as web;
 
 class NativeInputs {
   NativeInputs._();
@@ -14,8 +14,8 @@ class NativeInputs {
 
   static void _attachUsernameField(void Function(String)? usernameCallback) {
     // Add an username field if it does not already exist
-    if (html.document.querySelector(kUsernameFieldId) == null) {
-      final usernameInput = html.InputElement()
+    if (web.document.querySelector(kUsernameFieldId) == null) {
+      final usernameInput = web.HTMLInputElement()
         ..id = kUsernameFieldId
         ..type = 'text'
         ..name = 'username';
@@ -38,20 +38,20 @@ class NativeInputs {
           ..opacity = '0';
       }
 
-      html.document.body?.append(usernameInput);
+      web.document.body?.append(usernameInput);
 
       // Unfocus it ASAP
       usernameInput.onFocus.listen((_) => usernameInput.blur());
       usernameInput.onInput.listen((event) {
-        usernameCallback?.call(usernameInput.value ?? '');
+        usernameCallback?.call(usernameInput.value);
       });
     }
   }
 
   static void _attachPasswordField(void Function(String)? passwordCallback) {
     // Add a password field if it does not already exist
-    if (html.document.querySelector(kPasswordFieldId) == null) {
-      final passwordInput = html.InputElement()
+    if (web.document.querySelector(kPasswordFieldId) == null) {
+      final passwordInput = web.HTMLInputElement()
         ..id = kPasswordFieldId
         ..type = 'password'
         ..name = 'password';
@@ -74,18 +74,18 @@ class NativeInputs {
           ..opacity = '0';
       }
 
-      html.document.body?.append(passwordInput);
+      web.document.body?.append(passwordInput);
 
       // Unfocus it ASAP
       passwordInput.onFocus.listen((_) => passwordInput.blur());
       passwordInput.onInput.listen((_) {
-        passwordCallback?.call(passwordInput.value ?? '');
+        passwordCallback?.call(passwordInput.value);
       });
     }
   }
 
   static void dispose() {
-    html.document.querySelector('#$kUsernameFieldId')?.remove();
-    html.document.querySelector('#$kPasswordFieldId')?.remove();
+    web.document.querySelector('#$kUsernameFieldId')?.remove();
+    web.document.querySelector('#$kPasswordFieldId')?.remove();
   }
 }
