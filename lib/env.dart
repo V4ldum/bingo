@@ -6,6 +6,7 @@ part 'env.g.dart';
 abstract class Env {
   @EnviedField(obfuscate: true)
   static final String url = _Env.url;
+
   @EnviedField(obfuscate: true)
   static final String key = _Env.key;
 }
