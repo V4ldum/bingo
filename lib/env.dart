@@ -2,10 +2,11 @@ import 'package:envied/envied.dart';
 
 part 'env.g.dart';
 
-@Envied(useConstantCase: true)
+@Envied(useConstantCase: true, obfuscate: true)
 abstract class Env {
-  @EnviedField(obfuscate: true)
+  @EnviedField()
   static final String url = _Env.url;
-  @EnviedField(obfuscate: true)
+
+  @EnviedField()
   static final String key = _Env.key;
 }
