@@ -13,7 +13,7 @@ DatabaseRepository databaseRepository(Ref ref) {
 }
 
 class DatabaseRepository {
-  final _client = Supabase.instance.client;
+  final SupabaseClient _client = Supabase.instance.client;
 
   static const _kBingoTableName = 'bingo';
   static const _kBingoItemTableName = 'bingo_item';

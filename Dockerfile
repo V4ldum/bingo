@@ -14,7 +14,7 @@ RUN flutter config --enable-web
 
 # Build
 RUN dart run build_runner build
-RUN flutter build web --release
+RUN flutter build web --wasm --release
 
 
 FROM nginx:alpine-slim

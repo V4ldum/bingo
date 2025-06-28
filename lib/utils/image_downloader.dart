@@ -10,7 +10,7 @@ import 'package:rust/rust.dart';
 class ImageDownloader {
   ImageDownloader._();
 
-  static final downloadKey = GlobalKey();
+  static final GlobalKey<State<StatefulWidget>> downloadKey = GlobalKey();
 
   static Future<bool> downloadAsImage(Bingo bingo) async {
     final res = await Option.async<Uint8List>(($) async {

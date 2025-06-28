@@ -10,7 +10,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 @protected
 final router = GoRouter(
   initialLocation: AppRoutes._adminPath,
-  errorBuilder: (_, __) => const NotFoundPage(),
+  errorBuilder: (_, _) => const NotFoundPage(),
   redirect: (_, state) {
     final guard = [AppRoutes._bingoNewPath, AppRoutes._bingoEditPath];
     final authenticated = Supabase.instance.client.auth.currentSession != null;
@@ -24,7 +24,7 @@ final router = GoRouter(
     GoRoute(
       name: AppRoutes.admin,
       path: AppRoutes._adminPath,
-      builder: (_, __) {
+      builder: (_, _) {
         final authenticated = Supabase.instance.client.auth.currentSession != null;
 
         if (!authenticated) {
@@ -46,7 +46,7 @@ final router = GoRouter(
     GoRoute(
       name: AppRoutes.bingoNew,
       path: AppRoutes._bingoNewPath,
-      builder: (_, __) => const BingoEditPage(),
+      builder: (_, _) => const BingoEditPage(),
     ),
   ],
 );
