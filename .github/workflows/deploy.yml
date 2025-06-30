@@ -34,10 +34,6 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Install dependencies
-        working-directory: ./image_downloader_web
-        run: flutter pub get
-
       - name: Create env file
         run: echo "${{ secrets.ENV }}" > .env
 
