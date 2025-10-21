@@ -18,6 +18,7 @@ final router = GoRouter(
     if (guard.contains(state.fullPath) && !authenticated) {
       return AppRoutes._adminPath;
     }
+
     return null;
   },
   routes: [
