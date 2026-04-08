@@ -44,6 +44,8 @@ jobs:
         if: needs.detect-changes.outputs.rebuild == 'true'
         uses: v4ldum/shared-workflows/.github/workflows/test-flutter.yml@main
         secrets: inherit
+        with:
+            enabled: true
 
     build:
         needs: [detect-changes, test]
