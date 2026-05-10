@@ -4,10 +4,10 @@ import 'package:rust/rust.dart';
 
 Vec<BingoItem> _processBingoItems({required int size, required Vec<BingoItem> vec}) {
   vec.sort((a, b) => a.index.compareTo(b.index));
-  size = size * size;
+  final s = size * size;
 
-  if (vec.length != size) {
-    vec.resize(size, BingoItem(id: '', text: '', index: 0));
+  if (vec.length != s) {
+    vec.resize(s, BingoItem(id: '', text: '', index: 0));
   }
 
   // update indexes
