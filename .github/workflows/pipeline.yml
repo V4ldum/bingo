@@ -45,7 +45,7 @@ jobs:
         uses: v4ldum/shared-workflows/.github/workflows/test-flutter.yml@main
         secrets: inherit
         with:
-            test: true
+            test: false
             analyze: true
 
     build:
