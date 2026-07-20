@@ -8,7 +8,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
   usePathUrlStrategy();
-  await Supabase.initialize(url: Env.url, anonKey: Env.key);
+  await Supabase.initialize(url: Env.url, publishableKey: Env.key);
 
   runApp(
     const ProviderScope(
