@@ -1,18 +1,20 @@
 FROM dart:stable AS build
 WORKDIR /work
-COPY . .
 
 # Flutter
-RUN git clone https://github.com/flutter/flutter.git /flutter
+ADD --keep-git-dir=true https://github.com/flutter/flutter.git#stable /flutter
 ENV PATH="/flutter/bin:/flutter/bin/cache/dart-sdk/bin:${PATH}"
 
 # Config
-RUN flutter config --no-analytics
-RUN flutter channel stable
-RUN flutter upgrade
-RUN flutter config --enable-web
+RUN flutter config --no-analytics --enable-web && \
+    flutter precache --web
+
+# Dependencies
+COPY pubspec.yaml pubspec.lock ./
+RUN flutter pub get
 
 # Build
+COPY . .
 RUN dart run build_runner build
 RUN flutter build web --release
 
