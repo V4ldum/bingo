@@ -45,8 +45,7 @@ jobs:
         uses: v4ldum/shared-workflows/.github/workflows/test-flutter.yml@main
         secrets: inherit
         with:
-            test: false
-            analyze: true
+            format: false
 
     build:
         needs: [detect-changes, test]
