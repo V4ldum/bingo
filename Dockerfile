@@ -1,5 +1,7 @@
 FROM alpine AS version
 
+RUN apk add --no-cache jq
+
 # Query the most recent Flutter stable version
 # New Beta releases will invalidate cache, so we do it in its own layer to avoid invalidating the build layers
 ADD https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json releases.json
@@ -13,7 +15,7 @@ WORKDIR /work
 # Flutter
 # Invalidates cache on version change
 COPY --from=version flutter-stable flutter-stable
-RUN set -x; read -r version sha < /tmp/flutter-stable && \
+RUN set -x; read -r version sha < flutter-stable && \
     git clone --depth 1 --branch "$version" https://github.com/flutter/flutter.git /flutter && \
     test "$(git -C /flutter rev-parse HEAD)" = "$sha"
 ENV PATH="/flutter/bin:/flutter/bin/cache/dart-sdk/bin:${PATH}"
