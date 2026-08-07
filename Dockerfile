@@ -17,7 +17,7 @@ RUN dart run build_runner build
 RUN flutter build web --release
 
 
-FROM nginx:alpine-slim
+FROM nginxinc/nginx-unprivileged:alpine-slim
 # Update nginx config
 RUN sed -i '/location \/ {/,/}/s|^\(.*index  index.html index.htm;\)|\1\n        try_files \$uri \$uri/ \$uri.html /index.html;|' /etc/nginx/conf.d/default.conf
 

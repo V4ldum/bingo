@@ -2,6 +2,11 @@ services:
     bingo:
         image: ghcr.io/v4ldum/bingo:latest
         restart: unless-stopped
+        read_only: true
+        cap_drop: [ALL]
+        security_opt: [no-new-privileges:true]
+        tmpfs:
+            - /tmp
         healthcheck:
             # Draining
             test: test ! -f /tmp/drain # && some other healthcheck
