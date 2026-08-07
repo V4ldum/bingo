@@ -46,6 +46,7 @@ jobs:
         secrets: inherit
         with:
             format: false
+            test: false
 
     build:
         needs: [detect-changes, test]
