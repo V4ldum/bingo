@@ -3,7 +3,7 @@ FROM alpine AS version
 # Query the most recent Flutter stable version
 # New Beta releases will invalidate cache, so we do it in its own layer to avoid invalidating the build layers
 ADD https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json releases.json
-RUN awk -F'"' '$2=="stable" && !s {s=$4} s && $2=="hash" && $4==s {f=1} f && $2=="channel" && $4!="stable" {f=0} f && $2=="version" {print $4, s; exit}' /tmp/releases.json > /flutter-stable && \
+RUN awk -F'"' '$2=="stable" && !s {s=$4} s && $2=="hash" && $4==s {f=1} f && $2=="channel" && $4!="stable" {f=0} f && $2=="version" {print $4, s; exit}' releases.json > /flutter-stable && \
     test -s /flutter-stable
 
 
