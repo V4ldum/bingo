@@ -1,0 +1,24 @@
+# Whitelist: exclude everything and only add what's needed
+
+# Exclude everything
+*
+
+# Flutter related
+!pubspec.yaml
+!pubspec.lock
+
+# build_runner related
+!build.yaml
+
+# Sources
+!lib
+!web
+!assets
+
+
+# Created in CI using a secret, needed to build
+!.env
+
+# Re-exclude generated files (local only)
+lib/env.g.dart
+lib/**/_generated
