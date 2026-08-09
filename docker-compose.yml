@@ -6,7 +6,7 @@ services:
         cap_drop: [ALL]
         security_opt: [no-new-privileges:true]
         tmpfs:
-            - /tmp
+            - /tmp:mode=0700,uid=101,gid=101
         healthcheck:
             # Draining
             test: test ! -f /tmp/drain # && some other healthcheck
