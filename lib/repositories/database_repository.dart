@@ -22,6 +22,7 @@ class DatabaseRepository {
   static const _kBingoTitleColumnName = 'title';
   static const _kBingoSizeColumnName = 'size';
   static const _kBingoCreatedColumnName = 'created';
+  static const _kBingoOwnerColumnName = 'owner';
 
   static const _kBingoItemIdColumnName = 'id';
   static const _kBingoItemTextColumnName = 'text';
@@ -39,17 +40,22 @@ class DatabaseRepository {
   }
 
   Future<List<Bingo>> getAllBingos() async {
-    final bingos = await _client.from(_kBingoTableName).select();
+    final user = await _client.auth.getUser();
+
+    final bingos = await _client.from(_kBingoTableName).select().eq(_kBingoOwnerColumnName, user.user?.id ?? '');
     final dtos = bingos.map(BingoDto.fromJson);
 
     return dtos.map(Bingo.fromDto).toList();
   }
 
   Future<String> createBingo(Bingo bingo) async {
+    final user = await _client.auth.getUser();
+
     final res = await _client.from(_kBingoTableName).insert({
       _kBingoTitleColumnName: bingo.title,
       _kBingoSizeColumnName: bingo.size,
       _kBingoCreatedColumnName: DateFormat('MM-dd-yyyy').format(bingo.created), // american spergs
+      _kBingoOwnerColumnName: user.user!.id,
     }).select();
     final newBingo = BingoDto.fromJson(res.first);
 
