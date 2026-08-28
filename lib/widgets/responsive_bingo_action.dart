@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bingo/models/bingo.dart';
 import 'package:bingo/router.dart';
 import 'package:bingo/view_models/bingo_list_view_model.dart';
@@ -22,34 +24,36 @@ class ResponsiveBingoAction extends ConsumerStatefulWidget {
     const url = 'bingo.valdum.dev';
     final controller = TextEditingController()..text = 'https://$url/bingo/$id';
 
-    showShadDialog<void>(
-      context: context,
-      builder: (context) => ShadDialog(
-        title: const Text('Partager'),
-        child: ShadInput(
-          controller: controller,
-          trailing: ShadIconButton.ghost(
-            padding: EdgeInsets.zero,
-            decoration: const ShadDecoration(
-              secondaryBorder: ShadBorder.none,
-              secondaryFocusedBorder: ShadBorder.none,
-            ),
-            icon: const Icon(
-              size: 16,
-              LucideIcons.copy,
-            ),
-            onPressed: () async {
-              await Clipboard.setData(ClipboardData(text: controller.text));
+    unawaited(
+      showShadDialog<void>(
+        context: context,
+        builder: (context) => ShadDialog(
+          title: const Text('Partager'),
+          child: ShadInput(
+            controller: controller,
+            trailing: ShadIconButton.ghost(
+              padding: EdgeInsets.zero,
+              decoration: const ShadDecoration(
+                secondaryBorder: ShadBorder.none,
+                secondaryFocusedBorder: ShadBorder.none,
+              ),
+              icon: const Icon(
+                size: 16,
+                LucideIcons.copy,
+              ),
+              onPressed: () async {
+                await Clipboard.setData(ClipboardData(text: controller.text));
 
-              if (context.mounted) {
-                ShadToaster.of(context).show(
-                  const ShadToast(
-                    description: Text('URL copiée dans le presse-papier.'),
-                  ),
-                );
-                context.pop();
-              }
-            },
+                if (context.mounted) {
+                  ShadToaster.of(context).show(
+                    const ShadToast(
+                      description: Text('URL copiée dans le presse-papier.'),
+                    ),
+                  );
+                  context.pop();
+                }
+              },
+            ),
           ),
         ),
       ),

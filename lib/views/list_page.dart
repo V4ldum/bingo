@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bingo/router.dart';
 import 'package:bingo/view_models/bingo_list_view_model.dart';
 import 'package:bingo/widgets/bingo_list_sheet.dart';
@@ -44,7 +46,9 @@ class ListPage extends ConsumerWidget {
                       final buttons = [
                         ShadButton.secondary(
                           onPressed: () {
-                            Supabase.instance.client.auth.signOut();
+                            unawaited(
+                              Supabase.instance.client.auth.signOut(),
+                            );
                             // We pass a value here to force the route to rebuild, not ideal but don't know
                             // how to do otherwise
                             context.goNamed(AppRoutes.admin, extra: false);

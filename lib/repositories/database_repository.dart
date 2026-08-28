@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:bingo/models/bingo.dart';
 import 'package:bingo/repositories/dtos/bingo_dto.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -133,6 +134,8 @@ class DatabaseRepository {
   }
 
   void stopRealtimeUpdates() {
-    _client.removeAllChannels();
+    unawaited(
+      _client.removeAllChannels(),
+    );
   }
 }
