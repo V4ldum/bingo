@@ -33,7 +33,7 @@ class AuthenticationViewModel extends _$AuthenticationViewModel {
   }
 
   Future<bool?> authenticate() async {
-    final value = Option.of(state.valueOrNull);
+    final value = Option.of(state.value);
 
     if (value case Some(:final v)) {
       if (v.$1.isEmpty || v.$2.isEmpty) {

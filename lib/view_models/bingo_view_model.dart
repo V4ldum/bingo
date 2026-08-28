@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bingo/models/bingo.dart';
 import 'package:bingo/repositories/database_repository.dart';
 import 'package:flutter/widgets.dart';
@@ -15,13 +17,15 @@ class BingoViewModel extends _$BingoViewModel {
   }
 
   void checkBingoItem(String id) {
-    final value = Option.of(state.valueOrNull);
+    final value = Option.of(state.value);
 
     if (value case Some(:final v)) {
       final item = Option.of(v.items.iter().where((item) => item.id == id).next());
 
       if (item case Some(:final v)) {
-        ref.read(databaseRepositoryProvider).checkBingoItem(id, isChecked: !v.isChecked);
+        unawaited(
+          ref.read(databaseRepositoryProvider).checkBingoItem(id, isChecked: !v.isChecked),
+        );
       }
     }
   }
@@ -42,7 +46,7 @@ class BingoViewModel extends _$BingoViewModel {
   }
 
   void _realtimeUpdateRebuild(BingoItem newItem) {
-    final value = Option.of(state.valueOrNull);
+    final value = Option.of(state.value);
 
     if (value case Some(:final v)) {
       final oldItemIndex = v.items.indexWhere((item) => item.id == newItem.id);

@@ -43,7 +43,7 @@ class BingoEditPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Refresh only if loading or size changed
     ref.watch(
-      editBingoViewModelProvider(id: id).select((bingo) => (bingo.isLoading, bingo.valueOrNull?.size)),
+      editBingoViewModelProvider(id: id).select((bingo) => (bingo.isLoading, bingo.value?.size)),
     );
 
     return Scaffold(

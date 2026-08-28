@@ -3,6 +3,7 @@ import 'package:bingo/view_models/authentication_view_model.dart';
 import 'package:bingo/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rust/rust.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -116,7 +117,7 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
   @override
   Widget build(BuildContext context) {
     // Hack to get password managers to work with Flutter Web
-    final value = Option.of(ref.read(authenticationViewModelProvider).valueOrNull);
+    final value = Option.of(ref.read(authenticationViewModelProvider).value);
     if (value case Some(:final v)) {
       if (usernameController.text != v.$1) {
         debugPrint('Username field is desync-ed, probably means something autofilled, fixing');
