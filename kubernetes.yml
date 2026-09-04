@@ -120,3 +120,13 @@ spec:
                     httpGet:
                         path: /
                         port: http-in
+
+                volumeMounts:
+                  - name: config
+                    mountPath: /etc/nginx/conf.d/default.conf
+                    readOnly: true
+
+            volumes:
+              - name: config
+                configMap:
+                    name: bingo-nginx-config
