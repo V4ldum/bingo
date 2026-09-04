@@ -40,6 +40,34 @@ spec:
         targetPort: http-in
 
 ---
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+    name: bingo-nginx-config
+
+data:
+    default.conf: |
+        server {
+            listen       8080;
+            listen       [::]:8080;
+            server_name  localhost;
+
+            location / {
+                root   /usr/share/nginx/html;
+                index  index.html index.htm;
+
+                # Need for direct path navigation in Flutter
+                try_files $uri $uri/ $uri.html /index.html;
+            }
+
+            error_page   500 502 503 504  /50x.html;
+            location = /50x.html {
+                root   /usr/share/nginx/html;
+            }
+        }
+
+---
 apiVersion: apps/v1
 kind: Deployment
 
