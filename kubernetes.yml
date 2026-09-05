@@ -10,7 +10,7 @@ metadata:
 spec:
     ingressClassName: traefik
     rules:
-      - host: bingo.lan
+      - host: bingo.valdum.dev
         http:
             paths:
               - path: /
