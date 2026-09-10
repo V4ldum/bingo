@@ -17,31 +17,27 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: true
 
-env:
-    PROJECT: bingo
-
 jobs:
     detect-changes:
         runs-on: ubuntu-latest
         outputs:
-            project: ${{ env.PROJECT }}
-            rebuild: ${{ steps.filter.outputs.rebuild }}
-            redeploy: ${{ steps.filter.outputs.redeploy }}
+            build: ${{ steps.filter.outputs.build }}
+            deploy: ${{ steps.filter.outputs.deploy }}
         steps:
             - uses: actions/checkout@v7
             - uses: dorny/paths-filter@v4
               id: filter
               with:
                   filters: |
-                      rebuild:
+                      build:
                           - 'lib/**'
                           - 'Dockerfile'
-                      redeploy:
+                      deploy:
                           - 'docker-compose.yml'
 
     test:
         needs: detect-changes
-        if: needs.detect-changes.outputs.rebuild == 'true'
+        if: needs.detect-changes.outputs.build == 'true'
         uses: v4ldum/shared-workflows/.github/workflows/test-flutter.yml@main
         secrets: inherit
         with:
@@ -49,29 +45,25 @@ jobs:
             test: false
 
     build:
-        needs: [detect-changes, test]
+        needs: test
         uses: v4ldum/shared-workflows/.github/workflows/build.yml@main
         secrets: inherit
         with:
-            project: ${{ needs.detect-changes.outputs.project }}
+            project: bingo
 
     deploy:
-        needs: [detect-changes, test, build]
+        needs: [detect-changes, build]
         if: >-
-            always() &&
-            ((needs.test.result == 'success' && needs.build.result == 'success') ||
-             (needs.test.result == 'skipped' && needs.build.result == 'skipped' &&
-              needs.detect-changes.outputs.redeploy == 'true'))
+            needs.build.result == 'success' ||
+              needs.build.result == 'skipped' &&
+              needs.detect-changes.outputs.deploy == 'true'
         uses: v4ldum/shared-workflows/.github/workflows/deploy.yml@main
         secrets: inherit
-        with:
-            project: ${{ needs.detect-changes.outputs.project }}
-            drain: true
 
     cleanup:
-        needs: [detect-changes, build]
+        needs: [build, deploy]
         if: needs.build.result == 'success'
         uses: v4ldum/shared-workflows/.github/workflows/cleanup.yml@main
         secrets: inherit
         with:
-            project: ${{ needs.detect-changes.outputs.project }}
+            project: bingo
