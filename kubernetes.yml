@@ -130,3 +130,83 @@ spec:
               - name: config
                 configMap:
                     name: bingo-nginx-config
+---
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+    name: bingo-supabase-config
+
+data:
+    main.py: |
+        import os, subprocess, random, string
+        subprocess.check_output("pip install supabase") # Fuck Kubernetes
+        from supabase import create_client, Client
+
+        url: str = os.environ.get("SUPABASE_URL")
+        key: str = os.environ.get("SUPABASE_KEY")
+        table: str = "I8Ugt8pXA"
+        supabase: Client = create_client(url, key)
+
+        # Query the table
+        response = supabase.table(table).select("*").execute()
+
+        # Check if something was returned
+        if len(response.data) == 0:
+            # Nothing found, insert it
+            rnd = ''.join(random.choice(string.ascii_lowercase) for i in range(8))
+            supabase.table(table).insert({"id": rnd}).execute()
+        else:
+            # Something found, delete it
+            supabase.table(table).delete().neq("id", "toto").execute()
+
+---
+apiVersion: batch/v1
+kind: CronJob
+
+metadata:
+    name: bingo-supabase
+
+spec:
+    schedule: "52 11 * * WED,SUN"
+    timeZone: Europe/Paris
+    concurrencyPolicy: Forbid
+    startingDeadlineSeconds: 300
+    successfulJobsHistoryLimit: 1
+    failedJobsHistoryLimit: 1
+
+    jobTemplate:
+        spec:
+            backoffLimit: 0
+            activeDeadlineSeconds: 120
+
+            template:
+                metadata:
+                    labels:
+                        dozzle: "true"
+
+                spec:
+                    restartPolicy: Never
+
+                    containers:
+                      - name: bingo-supabase
+                        image: python:3-slim
+                        imagePullPolicy: Always
+
+                        envFrom:
+                          - secretRef:
+                                name: bingo-supabase-secrets
+
+                        command:
+                          - python
+                          - /app/main.py
+
+                        volumeMounts:
+                          - name: config
+                            mountPath: /app
+                            readOnly: true
+
+                    volumes:
+                      - name: config
+                        configMap:
+                            name: bingo-supabase-config
