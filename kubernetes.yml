@@ -139,8 +139,8 @@ metadata:
 
 data:
     main.py: |
-        import os, subprocess, random, string
-        subprocess.check_output("pip install supabase") # Fuck Kubernetes
+        import os, random, string
+        os.system("pip install supabase") # Fuck Kubernetes
         from supabase import create_client, Client
 
         url: str = os.environ.get("SUPABASE_URL")
