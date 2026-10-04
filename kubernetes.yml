@@ -108,10 +108,8 @@ spec:
                     value: Europe/Paris
 
                 startupProbe:
-                    httpGet:
-                        path: /
-                        port: http-in
-                livenessProbe:
+                    periodSeconds: 1
+                    failureThreshold: 10
                     httpGet:
                         path: /
                         port: http-in
@@ -140,7 +138,7 @@ metadata:
 data:
     main.py: |
         import os, random, string
-        os.system("pip install supabase") # Fuck Kubernetes
+        os.system("pip install --root-user-action=ignore supabase >/dev/null") # Fuck Kubernetes
         from supabase import create_client, Client
 
         url: str = os.environ.get("SUPABASE_URL")
@@ -172,8 +170,8 @@ spec:
     timeZone: Europe/Paris
     concurrencyPolicy: Forbid
     startingDeadlineSeconds: 300
-    successfulJobsHistoryLimit: 1
-    failedJobsHistoryLimit: 1
+    successfulJobsHistoryLimit: 2
+    failedJobsHistoryLimit: 2
 
     jobTemplate:
         spec:
