@@ -166,7 +166,7 @@ metadata:
     name: bingo-supabase
 
 spec:
-    schedule: "52 11 * * WED,SUN"
+    schedule: "52 11 * * *"
     timeZone: Europe/Paris
     concurrencyPolicy: Forbid
     startingDeadlineSeconds: 300
