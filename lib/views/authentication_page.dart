@@ -1,10 +1,10 @@
 import 'package:bingo/router.dart';
 import 'package:bingo/view_models/authentication_view_model.dart';
 import 'package:bingo/widgets/custom_app_bar.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:rust/rust.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 

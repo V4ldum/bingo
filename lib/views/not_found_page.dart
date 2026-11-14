@@ -1,6 +1,6 @@
 import 'package:bingo/widgets/custom_app_bar.dart';
 import 'package:bingo/widgets/no_bingo_here_error.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class NotFoundPage extends StatelessWidget {
   const NotFoundPage({super.key});

@@ -4,9 +4,9 @@ import 'package:bingo/view_models/edit_bingo_view_model.dart';
 import 'package:bingo/widgets/bingo_table.dart';
 import 'package:bingo/widgets/custom_app_bar.dart';
 import 'package:bingo/widgets/no_bingo_here_error.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:rust/rust.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 

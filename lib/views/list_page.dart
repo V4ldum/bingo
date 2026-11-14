@@ -5,9 +5,9 @@ import 'package:bingo/view_models/bingo_list_view_model.dart';
 import 'package:bingo/widgets/bingo_list_sheet.dart';
 import 'package:bingo/widgets/custom_app_bar.dart';
 import 'package:bingo/widgets/responsive_bingo_action.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

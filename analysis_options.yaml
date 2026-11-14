@@ -9,12 +9,13 @@ linter:
 analyzer:
   errors:
     invalid_annotation_target: ignore
-  #plugins:
-  #  - custom_lint
   exclude:
     - lib/**/_generated/** # Exclude all generated filed that you have no control over
     - build/**
     - web/**
+
+plugins:
+  riverpod_lint: ^3.2.0
 
 formatter:
   page_width: 120

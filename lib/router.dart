@@ -3,8 +3,8 @@ import 'package:bingo/views/bingo_edit_page.dart';
 import 'package:bingo/views/bingo_page.dart';
 import 'package:bingo/views/list_page.dart';
 import 'package:bingo/views/not_found_page.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 @protected

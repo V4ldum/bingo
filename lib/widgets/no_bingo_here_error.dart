@@ -1,5 +1,5 @@
 import 'package:bingo/constants/app_assets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 class NoBingoHereError extends StatelessWidget {
