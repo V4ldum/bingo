@@ -60,6 +60,8 @@ jobs:
                 needs.detect-changes.outputs.deploy == 'true'))
         uses: v4ldum/shared-workflows/.github/workflows/deploy.yml@main
         secrets: inherit
+        with:
+            project: bingo
 
     cleanup:
         needs: [build, deploy]
