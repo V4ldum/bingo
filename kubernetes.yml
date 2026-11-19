@@ -170,8 +170,8 @@ spec:
     timeZone: Europe/Paris
     concurrencyPolicy: Forbid
     startingDeadlineSeconds: 300
-    successfulJobsHistoryLimit: 2
-    failedJobsHistoryLimit: 2
+    successfulJobsHistoryLimit: 0
+    failedJobsHistoryLimit: 1
 
     jobTemplate:
         spec:
