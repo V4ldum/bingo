@@ -33,7 +33,7 @@ RUN flutter pub get
 # Build
 COPY . .
 RUN dart run build_runner build
-RUN flutter build web --release
+RUN flutter build web --release --web-content-hash --wasm
 
 
 ## RUN ##
