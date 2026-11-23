@@ -107,6 +107,13 @@ spec:
                   - name: TZ
                     value: Europe/Paris
 
+                securityContext:
+                    allowPrivilegeEscalation: false
+                    runAsNonRoot: true
+                    readOnlyRootFilesystem: true
+                    capabilities:
+                        drop: ["ALL"]
+
                 startupProbe:
                     periodSeconds: 1
                     failureThreshold: 10
@@ -123,11 +130,17 @@ spec:
                   - name: config
                     mountPath: /etc/nginx/conf.d/
                     readOnly: true
+                  - name: tmp
+                    mountPath: /tmp
 
             volumes:
               - name: config
                 configMap:
                     name: bingo-nginx-config
+              - name: tmp
+                emptyDir:
+                    medium: Memory
+                    sizeLimit: 1Mi
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -195,6 +208,13 @@ spec:
                           - secretRef:
                                 name: bingo-supabase-secrets
 
+                        securityContext:
+                            allowPrivilegeEscalation: false
+                            runAsNonRoot: true
+                            readOnlyRootFilesystem: true
+                            capabilities:
+                                drop: ["ALL"]
+
                         command:
                           - python
                           - /app/main.py
@@ -203,8 +223,14 @@ spec:
                           - name: config
                             mountPath: /app
                             readOnly: true
+                          - name: tmp
+                            mountPath: /tmp
 
                     volumes:
                       - name: config
                         configMap:
                             name: bingo-supabase-config
+                      - name: tmp
+                        emptyDir:
+                            medium: Memory
+                            sizeLimit: 1Mi
