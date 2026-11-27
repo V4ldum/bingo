@@ -179,7 +179,7 @@ metadata:
     name: bingo-supabase
 
 spec:
-    schedule: "52 11 * * *"
+    schedule: "52 11,23 * * *"
     timeZone: Europe/Paris
     concurrencyPolicy: Forbid
     startingDeadlineSeconds: 300
